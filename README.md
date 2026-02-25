@@ -7,7 +7,7 @@
 ####    Clasificación
 
 
-### Bloque II Métodos avanzados (30 horas presenciales + 45 no presenciales)
+### Bloque II Métodos avanzados
 
 ####    Métodos de remuestreo.  
 ####    Selección del modelo y regularización.
@@ -15,7 +15,7 @@
 ####    Introducción a los métodos de clasificación. Árboles de decisión.
 
 
-### Bloque III Introducción a la minería de texto.  (15 horas presenciales + 22.5 no presenciales)
+### Bloque III Introducción a la minería de texto. 
 
 ####     Fundamentos y preprocesamiento de texto.
 ####    Análisis exploratorio de texto.
