@@ -1,0 +1,246 @@
+---
+title: "Capitulo 2: Statistical Learning"
+author: "Paula G Ferrer"
+format: html
+editor: visual
+---
+
+## Capítulo 2: Ejercicios Conceptuales
+
+### Ejercicio 1
+
+Indique si se esperaría que un método de aprendizaje estadístico flexible fuera mejor o peor que un método inflexible en los siguientes escenarios:
+
+**a) El tamaño de la muestra** $n$ es extremadamente grande y el número de predictores $p$ es pequeño. **Respuesta:** Mejor. Un método flexible puede ajustarse mejor a los datos sin un riesgo elevado de sobreajuste (*overfitting*) debido a que el gran número de observaciones proporciona una base sólida para estimar la forma de la función $f$.
+
+**b) El número de predictores** $p$ es extremadamente grande y el número de observaciones $n$ es pequeño. **Respuesta:** Peor. Un método flexible sobreajustará los pocos datos disponibles, capturando el ruido en lugar de la relación subyacente. Los métodos inflexibles (como la regresión lineal) funcionan mejor aquí al restringir el espacio de búsqueda.
+
+**c) La relación entre los predictores y la respuesta es altamente no lineal.** **Respuesta:** Mejor. Los métodos inflexibles asumen formas específicas (como una línea recta). Si la relación es compleja, un método flexible tendrá la libertad necesaria para seguir esa curvatura.
+
+**d) La varianza de los términos de error,** $\sigma^2 = Var(\epsilon)$, es extremadamente alta. **Respuesta:** Peor. Un método flexible intentará ajustar el error aleatorio (ruido), lo que aumentará la varianza del modelo sin mejorar la precisión real sobre datos nuevos.
+
+------------------------------------------------------------------------
+
+### Ejercicio 2
+
+Explique si cada escenario es un problema de clasificación o regresión, y si estamos interesados en la predicción o la inferencia. Proporcione $n$ y $p$.
+
+**a) Una empresa quiere saber qué factores influyen en el salario de los CEO.** \* **Tipo:** Regresión (el salario es cuantitativo). \* **Interés:** Inferencia (queremos entender la relación). \* **n:** 500 empresas. \* **p:** 3 (beneficios, empleados, sector).
+
+**b) Lanzamiento de un nuevo producto: ¿éxito o fracaso?** \* **Tipo:** Clasificación (binario). \* **Interés:** Predicción (queremos saber si el nuevo producto funcionará). \* **n:** 20 productos similares. \* **p:** 13 variables.
+
+**c) Predicción del cambio en el tipo de cambio USD/Euro.** \* **Tipo:** Regresión (el cambio porcentual es continuo). \* **Interés:** Predicción. \* **n:** 52 semanas de datos de 2012. \* **p:** 3 (cambios en índices bursátiles).
+
+------------------------------------------------------------------------
+
+### Ejercicio 3
+
+Este ejercicio analiza el compromiso entre sesgo y varianza (*Bias-Variance Tradeoff*).
+
+-   **Varianza (Varianza):** Aumenta a medida que aumenta la flexibilidad.
+-   **Sesgo al cuadrado (Bias\^2):** Disminuye a medida que aumenta la flexibilidad.
+-   **Error de entrenamiento:** Disminuye monótonamente a medida que aumenta la flexibilidad.
+-   **Error de prueba (Test MSE):** Forma de "U". Disminuye inicialmente al reducirse el sesgo, pero luego aumenta debido al incremento de la varianza (sobreajuste).
+-   **Error irreducible (Bayes Error):** Una línea horizontal constante que representa el límite mínimo de error.
+
+------------------------------------------------------------------------
+
+### Ejercicio 4
+
+**(Teórico/Abierto)**
+
+-    **Regresión (Vida real):** Predecir el precio de una vivienda
+
+    (Respuesta: Precio; Predictores: m2, ubicación, año).
+
+-    **Clasificación (Vida real):** Diagnóstico médico
+
+    (Respuesta: Enfermo/Sano; Predictores: Síntomas, análisis de sangre).
+
+-   **Clusterización (Vida real):** Segmentación de clientes de un supermercado para marketing personalizado basándose en hábitos de compra.
+
+------------------------------------------------------------------------
+
+### Ejercicio 5
+
+**Ventajas y desventajas de un enfoque muy flexible:**
+
+-   **Ventajas:** Capacidad para ajustar relaciones no lineales complejas y mayor precisión potencial si $n$ es grande.
+
+-   **Desventajas:** Requiere muchos datos, es difícil de interpretar (caja negra) y tiene un alto riesgo de sobreajuste (*overfitting*).
+
+------------------------------------------------------------------------
+
+### Ejercicio 6
+
+**Paramétrico vs. No paramétrico:**
+
+-   **Paramétrico:** Asume una forma funcional para $f$ (ej. lineal). Ventaja: Necesita menos datos y es interpretable. Desventaja: Si la forma asumida es errónea, el error será alto.
+
+-   **No paramétrico:** No asume una forma. Se adapta a los datos. Ventaja: Flexible y preciso para formas complejas. Desventaja: Necesita muchísimas observaciones.
+
+------------------------------------------------------------------------
+
+### Ejercicio 7
+
+Supongamos que tenemos un conjunto de datos con $p=3$ predictores y una respuesta cualitativa $Y$.
+
+| Obs. | $X_1$ | $X_2$ | $X_3$ | $Y$   |
+|------|-------|-------|-------|-------|
+| 1    | 0     | 3     | 0     | Rojo  |
+| 2    | 2     | 0     | 0     | Rojo  |
+| 3    | 0     | 1     | 3     | Rojo  |
+| 4    | 0     | 1     | 2     | Verde |
+| 5    | -1    | 0     | 1     | Verde |
+| 6    | 1     | 1     | 1     | Rojo  |
+
+Para un punto de prueba $X = (0,0,0)$:
+
+**a) Distancia Euclídea:** $d = \sqrt{(X_{1i}-0)^2 + (X_{2i}-0)^2 + (X_{3i}-0)^2}$
+
+1\. $\sqrt{0^2+3^2+0^2} = 3$
+
+2\. $\sqrt{2^2+0^2+0^2} = 2$
+
+3\. $\sqrt{0^2+1^2+3^2} = \sqrt{10} \approx 3.16$
+
+4\. $\sqrt{0^2+1^2+2^2} = \sqrt{5} \approx 2.23$
+
+5\. $\sqrt{(-1)^2+0^2+1^2} = \sqrt{2} \approx 1.41$
+
+6\. $\sqrt{1^2+1^2+1^2} = \sqrt{3} \approx 1.73$
+
+**b) Predicción con** $K=1$: El vecino más cercano es la Obs 5 (distancia 1.41), cuya $Y$ es **Verde**.
+
+**c) Predicción con** $K=3$: Los tres más cercanos son Obs 5 (1.41), Obs 6 (1.73) y Obs 2 (2.0). Sus etiquetas son {Verde, Rojo, Rojo}. Por mayoría, la predicción es **Rojo**.
+
+**d) Si la frontera de decisión es altamente no lineal:** Esperaríamos que el mejor valor de $K$ sea **pequeño**. Un $K$ pequeño permite que la frontera sea más flexible y serpenteante.
+
+------------------------------------------------------------------------
+
+### Ejercicio 8: Dataset College
+
+a\) Cargar datos
+
+```{r}
+college <- read.csv("https://www.statlearning.com/s/College.csv")
+```
+
+b\) Configurar nombres de filas
+
+```{r}
+rownames(college) <- college[, 1] # Eliminamos la primera columna que ahora son los nombres college <- college[, -1]
+```
+
+c\) Exploración
+
+i\. Resumen numérico
+
+```{r}
+summary(college)
+```
+
+ii\. Matriz de dispersión de las primeras 10 columnas
+
+```{r}
+pairs(college[, 1:10])
+```
+
+iii\. Boxplot de Outstate vs Private
+
+```{r}
+plot(as.factor(college$Private), college$Outstate, 
+     xlab = "Private", ylab = "Outstate", main = "Outstate Tuition")
+```
+
+iv\. Crear variable Elite
+
+```{r}
+Elite <- rep("No", nrow(college))
+Elite[college$Top10perc > 50] <- "Yes"
+Elite <- as.factor(Elite)
+college <- data.frame(college, Elite)
+
+summary(college$Elite) # Ver cuántas universidades de élite hay
+plot(college$Elite, college$Outstate, main = "Outstate vs Elite")
+```
+
+v\. Histogramas
+
+```{r}
+par(mfrow = c(2, 2))
+hist(college$Apps, breaks = 20)
+hist(college$Accept, breaks = 30)
+hist(college$Enroll, breaks = 10)
+hist(college$Grad.Rate, breaks = 25)
+```
+
+### Ejercicio 9: Dataset Auto
+
+```{r}
+# Cargamos el dataset del paquete ISLR2
+library(ISLR2)
+auto <- Auto
+
+# a) Cualitativas vs Cuantitativas
+# Cuantitativas: mpg, cylinders, displacement, horsepower, weight, acceleration, year.
+# Cualitativas: origin, name.
+str(auto)
+
+# b) Rango de cuantitativas
+sapply(auto[, 1:7], range)
+
+# c) Media y Desviación estándar
+sapply(auto[, 1:7], mean)
+sapply(auto[, 1:7], sd)
+
+# d) Eliminar observaciones 10 a 85 y recalcular
+auto_subset <- auto[-(10:85), ]
+sapply(auto_subset[, 1:7], range)
+sapply(auto_subset[, 1:7], mean)
+sapply(auto_subset[, 1:7], sd)
+
+# e) Investigación gráfica
+pairs(auto)
+# Se observa una relación negativa entre mpg y weight/displacement.
+# f) ?
+```
+
+### Ejercicio 10: Dataset Boston
+
+```{r}
+# a) Cargar Boston
+library(ISLR2)
+?Boston
+dim(Boston) # 506 filas, 13 columnas
+
+# b) Matriz de dispersión
+pairs(Boston)
+# Se observa que el crimen (crim) parece aumentar en zonas con valores de 'age' altos 
+# y 'dis' (distancia a centros de empleo) bajos.
+
+# c) Asociación con tasa de criminalidad
+# Podemos mirar la correlación
+cor(Boston)[, "crim"]
+
+# d) Suburbios con altos índices de criminalidad
+hist(Boston$crim, breaks = 50)
+range(Boston$crim)
+# Hay algunos suburbios con tasas superiores a 80, muy por encima de la media.
+
+# e) ¿Cuántos suburbios limitan con el río Charles?
+sum(Boston$chas == 1) # 35 suburbios
+
+# f) Mediana de la ratio alumno-profesor
+median(Boston$ptratio) # 19.05
+
+# g) Suburbio con menor valor medio de la vivienda (medv)
+lowest_medv <- Boston[which.min(Boston$medv), ]
+lowest_medv
+# Comparando con el resto, este suburbio tiene alta criminalidad y alta proporción 
+# de casas antiguas (age = 100).
+
+# h) Habitaciones por vivienda
+sum(Boston$rm > 7) # 64
+sum(Boston$rm > 8) # 13
+```

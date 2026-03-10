@@ -1,0 +1,264 @@
+---
+title: "Capitulo 3: Linear Regression"
+author: "Paula G Ferrer"
+format: html
+editor: visual
+---
+
+## Capítulo 3: Ejercicios Conceptuales
+
+### Ejercicio 1
+
+**Enunciado:** Describa las hipótesis nulas a las que corresponden los valores p en la Tabla 3.4. ¿Qué conclusiones se pueden sacar de la tabla?
+
+**Respuesta:** La Tabla 3.4 generalmente muestra los coeficientes de una regresión lineal múltiple (por ejemplo, para el dataset `Advertising`).
+
+**Hipótesis Nula (**$H_0$): Para cada predictor $X_j$, la hipótesis nula es $H_0: \beta_j = 0$, lo que significa que no hay relación entre el predictor $X_j$ y la variable respuesta $Y$, asumiendo que los demás predictores están presentes en el modelo
+
+-   **Conclusiones:** Si el valor p es muy pequeño (típicamente \< 0.05), rechazamos $H_0$. En el caso de `TV` y `Radio`, los valores p suelen ser cercanos a cero, indicando una relación significativa. Para `Newspaper`, el valor p suele ser alto, sugiriendo que, en presencia de TV y Radio, el gasto en periódicos no aporta información adicional significativa para predecir las ventas
+
+------------------------------------------------------------------------
+
+### Ejercicio 2
+
+**Enunciado:** Describa cuidadosamente las diferencias entre el clasificador KNN y la regresión KNN.
+
+**Respuesta:**
+
+-   **KNN Clasificador:** Se utiliza para variables de respuesta cualitativas. \[cite_start\]Para un punto $x_0$, identifica los $K$ puntos más cercanos y asigna a $x_0$ la clase más frecuente (moda) entre esos vecinos
+
+-   **KNN Regresión:** Se utiliza para variables de respuesta cuantitativas. \[cite_start\] Para un punto $x_0$, identifica los $K$ puntos más cercanos y predice la respuesta de $x_0$ como el promedio aritmético de las respuestas $y_i$ de esos vecinos
+
+------------------------------------------------------------------------
+
+### Ejercicio 3
+
+**Enunciado:** Supongamos un modelo con 5 predictores: $X_1 = GPA, X_2 = IQ, X_3 = Level$ (1 Universidad, 0 Secundaria), $X_4 = GPA \times IQ, X_5 = GPA \times Level$. \[cite_start\]Los coeficientes son: $\hat{\beta}_0 = 50, \hat{\beta}_1 = 20, \hat{\beta}_2 = 0.07, \hat{\beta}_3 = 35, \hat{\beta}_4 = 0.01, \hat{\beta}_5 = -10$
+
+**a) ¿Qué afirmación es correcta?**
+
+**Análisis:**
+
+-   Secundaria ($X_3=0$): $\hat{Y} = 50 + 20 \cdot GPA + 0.07 \cdot IQ + 0.01(GPA \times IQ)$
+
+-   Universidad ($X_3=1$): $\hat{Y} = 50 + 20 \cdot GPA + 0.07 \cdot IQ + 35 + 0.01(GPA \times IQ) - 10 \cdot GPA$
+
+-   Diferencia (Univ - Sec): $35 - 10 \cdot GPA$
+
+**Respuesta:** La opción **iii** es correcta: Los graduados de secundaria ganan más que los universitarios *siempre que el GPA sea lo suficientemente alto* (específicamente si $GPA > 3.5$)
+
+**b) Predicción para** $GPA=4.0, IQ=110, Level=1$: $\hat{Y} = 50 + 20(4) + 0.07(110) + 35(1) + 0.01(4 \times 110) - 10(4 \times 1) = 50 + 80 + 7.7 + 35 + 4.4 - 40 = 137.1$ (en miles de \$)
+
+**c) ¿El coeficiente de interacción pequeño implica poco efecto?**
+
+**Respuesta:** Falso. No podemos juzgar la importancia solo por la magnitud del coeficiente; depende de la escala de las variables y del error estándar para determinar la significancia estadística (valor p)
+
+------------------------------------------------------------------------
+
+### Ejercicio 4
+
+**Enunciado:** Comparación de RSS de entrenamiento y prueba entre regresión lineal y cúbica cuando la relación verdadera es lineal
+
+**a) RSS de entrenamiento:**
+
+**Respuesta:** El modelo cúbico tendrá un RSS de entrenamiento **menor** o igual. Al ser más flexible, puede ajustarse mejor al ruido de los datos de entrenamiento
+
+**b) RSS de prueba:**
+
+**Respuesta:** El modelo lineal tendrá un RSS de prueba **menor**. Al ser la relación real lineal, el modelo cúbico sufrirá de *overfitting*
+
+**c) Relación verdadera NO lineal:**
+
+**Respuesta:** El modelo cúbico tendrá un RSS de entrenamiento **menor** (siempre es así por flexibilidad).
+
+**d) Relación verdadera NO lineal (Prueba):**
+
+**Respuesta:** No hay suficiente información. Depende de cuán lejos de la linealidad esté la relación verdadera. Si es casi cúbica, ganará el modelo cúbico; si es casi lineal, el lineal podría ganar por menor varianza
+
+### Ejercicio 5
+
+Enunciado: Demostrar la forma de \$\\hat{\\beta}\$ en regresión lineal sin intercepto.
+
+Respuesta: Al minimizar $\sum (y_i - x_i \beta)^2$, derivamos respecto a $\beta$ e igualamos a cero: $-2 \sum x_i(y_i - x_i \beta) = 0 \implies \sum x_i y_i = \beta \sum x_i^2 \implies \hat{\beta} = \frac{\sum x_i y_i}{\sum x_i^2}$
+
+### Ejercicio 6
+
+Enunciado: Demostrar que la línea de regresión pasa por $(\bar{x}, \bar{y})$.
+Respuesta: La ecuación es $y = \hat{\beta}_0 + \hat{\beta}_1 x$. Sustituyendo la definición de $\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}$, obtenemos $\bar{y} = (\bar{y} - \hat{\beta}_1 \bar{x}) + \hat{\beta}_1 \bar{x}$, lo cual se simplifica a $\bar{y} = \bar{y}$
+
+### Ejercicio 7
+
+**Enunciado:** Relación entre $R^2$ y la correlación al cuadrado ( $r^2$ ).
+Respuesta: En regresión lineal simple, se puede demostrar algebraicamente que $R^2 = \frac{[\sum(x_i-\bar{x})(y_i-\bar{y})]^2}{\sum(x_i-\bar{x})^2 \sum(y_i-\bar{y})^2}$, que coincide exactamente con la fórmula del coeficiente de correlación de Pearson al cuadrado.
+
+------------------------------------------------------------------------
+
+### Ejercicio 8: Dataset Auto (Regresión Simple)
+
+```{r}
+library(ISLR2)
+# a)
+auto_fit <- lm(mpg ~ horsepower, data = Auto)
+summary(auto_fit)
+```
+
+i\. ¿Hay relación?
+
+Sí, el valor p es \< 2e-16.
+
+ii\. ¿Fuerte?
+
+El R\^2 es 0.6059, explica el 60% de la varianza.
+
+iii\. ¿Positiva o negativa?
+
+Negativa (coeficiente -0.157).
+
+iv\. Predicción para horsepower = 98
+
+```{r}
+# b)
+predict(auto_fit, data.frame(horsepower = 98), interval = "prediction")
+
+# c)
+plot(Auto$horsepower, Auto$mpg)
+abline(auto_fit, col = "red")
+```
+
+### Ejercicio 9: Dataset Auto (Regresión múltiple)
+
+```{r}
+# a) Matriz de dispersión
+pairs(Auto)
+
+# b) Correlaciones (excluyendo el nombre)
+cor(Auto[, -9])
+
+# c) Regresión múltiple
+multiple_fit <- lm(mpg ~ . - name, data = Auto)
+summary(multiple_fit)
+```
+
+i\. ¿Relación?
+
+Sí (F-statistic muy alto).
+
+ii\. Significativos: displacement, weight, year, origin.
+
+iii\. El coeficiente de 'year' (0.75) sugiere que los coches mejoran su consumo cada año.
+
+d\) Diagnósticos
+
+```{r}
+par(mfrow = c(2, 2))
+plot(multiple_fit)
+# Se observa no linealidad en el gráfico de residuos.
+```
+
+### Ejercicio 10: Dataset Carseats
+
+```{r}
+# a) Ajuste del modelo
+carseats_fit <- lm(Sales ~ Price + Urban + US, data = Carseats)
+summary(carseats_fit)
+```
+
+b\) Interpretación:
+
+Price: Por cada \$ de aumento en precio, las ventas bajan 0.05 unidades.
+
+UrbanYes: No es significativo (p-value alto).
+
+USYes: Si la tienda está en EE.UU., vende \~1.2 unidades más.
+
+```{r}
+# e) Modelo reducido (sin variables irrelevantes)
+reduced_fit <- lm(Sales ~ Price + US, data = Carseats)
+summary(reduced_fit)
+
+# g) Intervalos de confianza
+confint(reduced_fit)
+```
+
+### Ejercicio 11: Regresión sin intercepto
+
+```{r}
+set.seed(1)
+x <- rnorm(100)
+y <- 2 * x + rnorm(100)
+# Regresión y sobre x
+fit_yx <- lm(y ~ x + 0)
+# Regresión x sobre y
+fit_xy <- lm(x ~ y + 0)
+summary(fit_yx)$t
+summary(fit_xy)$t # Los estadísticos t son idénticos
+```
+
+### Ejercicio 12: Coeficientes idénticos
+
+**Enunciado:** ¿Cuándo $β^​y∼x​=β^​x∼y​$?
+**Respuesta:** Ocurre cuando $\sum x_i^2 ​= \sum y_i^2​$
+
+```{r}
+x <- rnorm(100)
+y <- sample(x) # Misma suma de cuadrados
+lm(y ~ x + 0)$coef
+lm(x ~ y + 0)$coef
+```
+
+### Ejercicio 13: Simulación de datos
+
+```{r}
+set.seed(1)
+# a, b, c) Generación
+x <- rnorm(100)
+eps <- rnorm(100, 0, 0.25)
+y <- -1 + 0.5 * x + eps
+
+# d) Gráfico
+plot(x, y) # Se observa una relación lineal clara.
+
+# e) Ajuste
+sim_fit <- lm(y ~ x)
+summary(sim_fit) # beta0 y beta1 cercanos a -1 y 0.5.
+
+# f) Rectas
+abline(sim_fit, col = "blue") # Estimada
+abline(-1, 0.5, col = "red")  # Poblacional
+legend("bottomright", legend=c("Ajustada", "Real"), col=c("blue", "red"), lty=1)
+```
+
+### Ejercicio 14: Colinealidad
+
+```{r}
+set.seed(1)
+x1 <- runif(100)
+x2 <- 0.5 * x1 + rnorm(100) / 10
+y <- 2 + 2 * x1 + 0.3 * x2 + rnorm(100)
+# La correlación entre x1 y x2 es muy alta
+cor(x1, x2)
+fit14 <- lm(y ~ x1 + x2)
+summary(fit14) # Los errores estándar son grandes debido a colinealidad.
+```
+
+### Ejercicio 15: Dataset Boston
+
+```{r}
+# Regresión de cada variable contra el crimen por separado
+library(ISLR2)
+variables <- names(Boston)[-1]
+univariate_coefs <- c()
+
+for (v in variables) {
+  fit <- lm(as.formula(paste("crim ~", v)), data = Boston)
+  univariate_coefs[v] <- coef(fit)[2]
+}
+
+# Regresión múltiple total
+full_fit <- lm(crim ~ ., data = Boston)
+multiple_coefs <- coef(full_fit)[-1]
+
+# Comparación
+plot(univariate_coefs, multiple_coefs)
+# Los coeficientes cambian drásticamente cuando se consideran todas las variables.
+```

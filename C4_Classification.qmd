@@ -1,0 +1,287 @@
+---
+title: "Capítulo 4: Classification"
+author: "Paula G Ferrer"
+format: html
+editor: visual
+---
+
+## Capítulo 4: Ejercicios Conceptuales
+
+### Ejercicio 1
+
+**Enunciado:** Demostrar que la forma de la función logística (4.2) es equivalente a la forma de logit (4.3).
+
+**Solución:** La función logística es $p(X) = \frac{e^{\beta_0 + \beta_1 X}}{1 + e^{\beta_0 + \beta_1 X}}$. Para obtener el *logit*, calculamos la razón de probabilidades (*odds*): $$\frac{p(X)}{1 - p(X)} = \frac{\frac{e^{\beta_0 + \beta_1 X}}{1 + e^{\beta_0 + \beta_1 X}}}{1 - \frac{e^{\beta_0 + \beta_1 X}}{1 + e^{\beta_0 + \beta_1 X}}} = \frac{e^{\beta_0 + \beta_1 X}}{(1 + e^{\beta_0 + \beta_1 X}) - e^{\beta_0 + \beta_1 X}} = e^{\beta_0 + \beta_1 X}$$ Tomando el logaritmo natural en ambos lados: $$\log\left(\frac{p(X)}{1 - p(X)}\right) = \beta_0 + \beta_1 X$$ Esto demuestra que ambas expresiones son equivalentes.
+
+### Ejercicio 2
+
+**Enunciado:** Demostrar que el clasificador de Bayes que maximiza (4.13) es equivalente a maximizar la función discriminante lineal (4.12).
+
+**Solución:** Partimos de la probabilidad a posteriori de que $Y=k$ dado $X=x$: $$p_k(x) = \frac{\pi_k \frac{1}{\sqrt{2\pi}\sigma} \exp\left(-\frac{1}{2\sigma^2}(x-\mu_k)^2\right)}{\sum \pi_l \frac{1}{\sqrt{2\pi}\sigma} \exp\left(-\frac{1}{2\sigma^2}(x-\mu_l)^2\right)}$$ Maximizar $p_k(x)$ es equivalente a maximizar el numerador. Aplicando el logaritmo (función monótona creciente): $$\log(\pi_k) - \log(\sqrt{2\pi}\sigma) - \frac{1}{2\sigma^2}(x^2 - 2x\mu_k + \mu_k^2)$$ Eliminando términos que no dependen de $k$ (como $x^2$ y la constante con $\sigma$): $$\delta_k(x) = x \cdot \frac{\mu_k}{\sigma^2} - \frac{\mu_k^2}{2\sigma^2} + \log(\pi_k)$$ Esta es precisamente la función de discriminación lineal (LDA).
+
+### Ejercicio 3
+
+**Enunciado:** Repetir la demostración anterior pero asumiendo que cada clase tiene su propia varianza $\sigma_k^2$ (QDA).
+
+**Solución:** Si las varianzas son distintas, el término $\sigma_k$ no desaparece al simplificar. Al tomar el logaritmo del numerador, obtenemos: $$\delta_k(x) = -\frac{1}{2\sigma_k^2}(x-\mu_k)^2 - \log(\sigma_k) + \log(\pi_k)$$ Al expandir el cuadrado, el término $x^2$ permanece porque está dividido por una $\sigma_k^2$ diferente para cada clase. Esto da como resultado una función cuadrática en $x$.
+
+### Ejercicio 4
+
+**Enunciado:** Problema de la maldición de la dimensionalidad. Si tenemos observaciones uniformemente distribuidas en $p$ dimensiones, ¿qué fracción de los datos cae en un hipercubo que cubre el 10% del rango de cada dimensión?
+
+**Solución:**
+
+a\) $p=1$: El 10%.
+
+b\) $p=2$: $0.1 \times 0.1 = 0.01$ (1%).
+
+c\) $p=100$: $0.1^{100}$, una fracción infinitesimalmente pequeña.
+
+d\) **Conclusión:** A medida que $p$ crece, los puntos se vuelven extremadamente aislados. Para capturar un 10% de los datos, necesitamos cubrir casi todo el rango de cada dimensión, lo que invalida la noción de "vecindad local".
+
+### Ejercicio 5
+
+**Enunciado:** Diferencias entre LDA y QDA.
+
+-   **LDA:** Si la frontera de decisión es lineal, LDA tendrá un mejor rendimiento en el conjunto de prueba (menor varianza).
+
+-   **QDA:** Si la frontera es no lineal, QDA será mejor (menor sesgo). **A medida que** $n$ crece: QDA tiende a ser mejor porque tiene suficiente información para estimar los parámetros adicionales sin sobreajustar tanto.
+
+a\) Si la frontera de decisión de Bayes es lineal:
+Respuesta: El LDA funcionará mejor. Al tener un sesgo bajo (ya que coincide con la realidad) y una menor varianza (menos parámetros que estimar), superará al QDA en el conjunto de prueba.
+
+b) Si la frontera de decisión de Bayes es no lineal:
+Respuesta: El QDA funcionará mejor. El LDA sufrirá de un alto sesgo al intentar ajustar una línea a una curva, mientras que el QDA tiene la flexibilidad necesaria.
+
+c) A medida que aumenta el tamaño de la muestra $n$:
+Respuesta: Se espera que el QDA mejore en relación al LDA. Con más datos, la varianza del QDA (su principal desventaja) disminuye, permitiendo que su flexibilidad sea una ventaja sin tanto riesgo de sobreajuste.
+
+d) Verdadero o Falso:
+
+¿Un método más flexible siempre dará un error de prueba menor?
+
+Respuesta: Falso. Si la verdadera frontera es lineal y tenemos pocos datos, un método flexible (QDA) sobreajustará el ruido y tendrá un error de prueba mayor que un método inflexible (LDA).
+
+### Ejercicio 6
+
+Enunciado: Predecir si un estudiante obtendrá un "Sobresaliente" basado en $X_1$ (Horas de estudio) y $X_2$ (GPA). $\beta_0 = -6, \beta_1 = 0.05, \beta_2 = 1$.
+
+a\) Probabilidad para $X_1=40, X_2=3.5$:
+$$p(X) = \frac{e^{-6 + 0.05(40) + 3.5}}{1 + e^{-6 + 0.05(40) + 3.5}} = \frac{e^{-0.5}}{1 + e^{-0.5}} = \frac{0.6065}{1.6065} \approx 0.3775$$
+La probabilidad es del 37.75%.
+
+b) ¿Cuántas horas debe estudiar para tener un 50% de probabilidad si su GPA es 3.5?
+Para que $p(X) = 0.5$, el exponente debe ser 0:
+$$-6 + 0.05(X_1) + 3.5 = 0 \implies 0.05(X_1) = 2.5 \implies X_1 = 50$$
+Debe estudiar ndefined50 horas.
+
+### Ejercicio 7
+
+Enunciado: Calcular la probabilidad de que una empresa dé dividendos dado que su beneficio neto es \$X=4\$, usando LDA con $\mu_{yes}=10, \mu_{no}=0, \sigma^2=36, \pi_{yes}=0.8$
+Solución:
+Usamos la fórmula de Bayes con densidades normales:
+$$P(Yes|X=4) = \frac{\pi_{yes} \exp(-\frac{1}{2\sigma^2}(4-\mu_{yes})^2)}{\pi_{yes} \exp(-\dots) + \pi_{no} \exp(-\frac{1}{2\sigma^2}(4-\mu_{no})^2)}$$
+$Numerador: 0.8 \cdot \exp(-(4-10)^2 / 72) = 0.8 \cdot \exp(-0.5) \approx 0.4852$
+$Denominador: 0.4852 + (0.2 \cdot \exp(-(4-0)^2 / 72)) = 0.4852 + (0.2 \cdot 0.8007) \approx 0.6453$
+$P = 0.4852 / 0.6453 \approx 0.752$
+
+### Ejercicio 8
+
+Enunciado: Se usa KNN (\$K=1\$) y se obtiene un error de entrenamiento del 0% y de prueba del 36%. La regresión logística da un 20% en entrenamiento y 30% en prueba. ¿Cuál elegir?
+
+Respuesta: La Regresión Logística. El error que importa es el de prueba (30% vs 36%). El 0% de KNN en entrenamiento es un síntoma claro de sobreajuste extremo.
+
+### Ejercicio 9
+
+Enunciado: Relación entre \*odds\* y probabilidades.
+
+a\) Si los odds son 0.37, ¿cuál es la probabilidad?\*\*
+$p / (1-p) = 0.37 \implies p = 0.37 - 0.37p \implies 1.37p = 0.37 \implies p = 0.27$
+
+b\) Si la probabilidad es 0.16, ¿cuáles son los odds?\*\*
+$0.16 / (1-0.16) = 0.16 / 0.84 \approx 0.19$
+
+### Ejercicio 10
+
+Enunciado: Demostrar que el clasificador de Bayes es equivalente a la frontera logit.
+
+Respuesta: (Este ejercicio es algebraico y similar al Ejercicio 2, demostrando que al dividir las densidades normales de dos clases, los términos cuadráticos se cancelan en LDA, resultando en una función lineal de \$x\$).
+
+### 
+Ejercicio 11
+
+Enunciado: Demostrar que en una clasificación de dos clases, si $p(x) = P(Y=1|X=x)$, entonces la frontera de decisión LDA es el valor de $x$ donde $p(x)=0.5$.
+
+Respuesta: Si $p(x)=0.5$, los \*odds\* son \$1\$ y el \*log-odds\* es \$0\$. En LDA, el log-odds es una función lineal de \$x\$. Por tanto, el punto donde cruza el 0 es exactamente la frontera lineal donde $\delta_1(x) = \delta_2(x)$.
+
+### Ejercicio 12
+
+Enunciado: Comparación de logit con clases exponenciales.
+
+Respuesta: Si las densidades siguen una distribución exponencial en lugar de normal, la forma del logit seguirá siendo una función de \$x\$, pero la relación resultante no será necesariamente lineal en los parámetros originales a menos que se transforme.
+
+------------------------------------------------------------------------
+
+### Ejercicio 13: Dataset Weekly
+
+```{r}
+library(ISLR2)
+summary(Weekly)
+
+# a) Exploración gráfica
+pairs(Weekly)
+cor(Weekly[,-9]) # Solo Year y Volume muestran correlación
+
+# b) Regresión Logística
+fit_log <- glm(Direction ~ Lag1 + Lag2 + Lag3 + Lag4 + Lag5 + Volume, 
+               data = Weekly, family = binomial)
+summary(fit_log) # Solo Lag2 parece significativo
+
+# c) Matriz de confusión
+probs <- predict(fit_log, type = "response")
+preds <- ifelse(probs > 0.5, "Up", "Down")
+table(preds, Weekly$Direction)
+mean(preds == Weekly$Direction) # Precisión de entrenamiento
+
+# d) Ajuste con Lag2 (entrenamiento 1990-2008)
+train <- (Weekly$Year <= 2008)
+Weekly_test <- Weekly[!train, ]
+Direction_test <- Weekly$Direction[!train]
+
+fit_log_train <- glm(Direction ~ Lag2, data = Weekly, 
+                     family = binomial, subset = train)
+
+# e) LDA
+library(MASS)
+fit_lda <- lda(Direction ~ Lag2, data = Weekly, subset = train)
+pred_lda <- predict(fit_lda, Weekly_test)
+table(pred_lda$class, Direction_test)
+mean(pred_lda$class == Direction_test)
+
+# f) QDA
+fit_qda <- qda(Direction ~ Lag2, data = Weekly, subset = train)
+pred_qda <- predict(fit_qda, Weekly_test)
+mean(pred_qda$class == Direction_test)
+
+# g) KNN (K=1)
+library(class)
+train_X <- as.matrix(Weekly$Lag2[train])
+test_X <- as.matrix(Weekly$Lag2[!train])
+train_Dir <- Weekly$Direction[train]
+set.seed(1)
+knn_pred <- knn(train_X, test_X, train_Dir, k = 1)
+mean(knn_pred == Direction_test)
+```
+
+### Ejercicio 14: Dataset Auto (precedir mpg01)
+
+```{r}
+# a) Crear variable binaria
+mpg01 <- ifelse(Auto$mpg > median(Auto$mpg), 1, 0)
+Auto_df <- data.frame(Auto, mpg01)
+
+# b) Exploración
+pairs(Auto_df) # cylinders, weight y displacement parecen útiles
+
+# c) Dividir datos
+set.seed(1)
+idx <- sample(1:nrow(Auto_df), nrow(Auto_df)*0.7)
+train_set <- Auto_df[idx, ]
+test_set <- Auto_df[-idx, ]
+
+# d) LDA
+lda_auto <- lda(mpg01 ~ cylinders + weight + displacement + horsepower, data = train_set)
+lda_pred <- predict(lda_auto, test_set)
+mean(lda_pred$class != test_set$mpg01) # Error de prueba
+
+# f) Regresión Logística
+log_auto <- glm(mpg01 ~ cylinders + weight + displacement + horsepower, 
+                data = train_set, family = binomial)
+log_probs <- predict(log_auto, test_set, type = "response")
+log_preds <- ifelse(log_probs > 0.5, 1, 0)
+mean(log_preds != test_set$mpg01)
+
+# g) Naive Bayes
+library(e1071)
+nb_auto <- naiveBayes(mpg01 ~ cylinders + weight + displacement + horsepower, data = train_set)
+nb_preds <- predict(nb_auto, test_set)
+mean(nb_preds != test_set$mpg01)
+
+# h) KNN con varios K
+ks <- c(1, 5, 10, 50)
+for(k in ks){
+  knn_auto <- knn(as.matrix(train_set[,c("weight","horsepower")]), 
+                  as.matrix(test_set[,c("weight","horsepower")]), 
+                  train_set$mpg01, k = k)
+  print(paste("Error para K =", k, ":", mean(knn_auto != test_set$mpg01)))
+}
+```
+
+### Ejercicio 15: Funcion para potencias
+
+Enunciado: pide crear funciones en R para cálculos matemáticos básicos aplicados a vectores, que es la base de las implementaciones manuales de modelos.
+
+```{r}
+# a) Función Power()
+Power <- function() {
+  print(2^3)
+}
+Power()
+
+# b) Función Power2(x, a)
+Power2 <- function(x, a) {
+  print(x^a)
+}
+Power2(3, 8)
+
+# c) Usando Power2 para varios valores
+Power2(10, 3)
+Power2(8, 17)
+Power2(131, 3)
+
+# d) Función que retorna valor
+Power3 <- function(x, a) {
+  return(x^a)
+}
+
+# e) Gráfico
+x <- 1:10
+y <- Power3(x, 2)
+plot(x, y, log = "y", main = "Gráfico logarítmico de x^2")
+
+# f) PlotPower
+PlotPower <- function(x, a) {
+  plot(x, Power3(x, a))
+}
+PlotPower(1:10, 3)
+```
+
+### Ejercicio 16: Boston (precedir crim01)
+
+```{r}
+library(ISLR2)
+crim01 <- ifelse(Boston$crim > median(Boston$crim), 1, 0)
+Boston_final <- data.frame(Boston, crim01)
+
+# División 80/20
+set.seed(123)
+train_idx <- sample(1:nrow(Boston_final), 0.8 * nrow(Boston_final))
+train_data <- Boston_final[train_idx, ]
+test_data <- Boston_final[-train_idx, ]
+
+# Modelo Logístico
+fit_log <- glm(crim01 ~ zn + indus + nox + rm + age + dis + rad + tax + ptratio + lstat + medv, 
+               data = train_data, family = binomial)
+
+# Predicción
+probs <- predict(fit_log, test_data, type = "response")
+preds <- ifelse(probs > 0.5, 1, 0)
+print(paste("Precisión Logística:", mean(preds == test_data$crim01)))
+
+# KNN con K=3 (Variables escaladas)
+library(class)
+train_scaled <- scale(train_data[, -c(1, 14)])
+test_scaled <- scale(test_data[, -c(1, 14)])
+knn_res <- knn(train_scaled, test_scaled, train_data$crim01, k = 3)
+print(paste("Precisión KNN:", mean(knn_res == test_data$crim01)))
+```
