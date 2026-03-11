@@ -1,0 +1,207 @@
+---
+title: "Taller Clasificación"
+author: "Paula Gª Ferrer, Sara Blanco, Alicia Rodriguez"
+format:
+  html:
+    toc: true
+lang: es
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+Trabajaréis con el conjunto de datos `PimaIndiansDiabetes2`, que es parte del paquete `mlbench`. La tabla de datos contiene información clínica de mujeres de ascendencia india pima, incluyendo las siguientes variables:
+
+| Variable | Descripción | Tipo | Unidad / escala |
+|------------------|------------------|------------------|------------------|
+| `pregnant` | Número de embarazos de la paciente | Cuantitativa discreta | Recuento |
+| `glucose` | Concentración de glucosa plasmática a las 2 horas en una prueba oral de tolerancia a la glucosa | Cuantitativa continua | Concentración plasmática |
+| `pressure` | Presión arterial diastólica | Cuantitativa continua | mm Hg |
+| `triceps` | Espesor del pliegue cutáneo del tríceps | Cuantitativa continua | mm |
+| `insulin` | Concentración de insulina sérica a las 2 horas | Cuantitativa continua | `mu U/ml` |
+| `mass` | Índice de masa corporal (BMI) | Cuantitativa continua | `kg/m^2` |
+| `pedigree` | Índice numérico que resume la historia familiar de diabetes | Cuantitativa continua | Score |
+| `age` | Edad de la paciente | Cuantitativa continua | Años |
+| `diabetes` | Presencia o ausencia de diabetes (`neg` / `pos`) | Cualitativa binaria | Categorías |
+
+El objetivo del taller es predecir la variable `diabetes` a partir de las variables clínicas disponibles.
+
+En cada apartado debéis incluir el código utilizado, la salida relevante y una breve interpretación de los resultados. No basta con mostrar el resultado numérico: es necesario comentarlo.
+
+```{r}
+library(mlbench)
+library(tidyverse)
+
+```
+
+## (a) Producid algunos resúmenes numéricos y gráficos de los datos de `PimaIndiansDiabetes2`. ¿Parece haber algún patrón que distinga a las pacientes con diabetes de las que no la presentan? (1 punto)
+
+### Respuesta
+
+```{r}
+library(GGally)
+data(PimaIndiansDiabetes2)#data
+datos <- PimaIndiansDiabetes2
+#estructura de los datos
+str(datos)
+#resumen
+summary(datos)
+
+#vamoh a limpiar
+datos_limpio <- na.omit(datos)
+
+#graficos
+ggpairs(
+  datos_limpio,
+  columns = c("glucose","mass","age","insulin","pressure","diabetes", "pedigree","triceps", "pregnant"),
+  lower = list(continuous = wrap("points", alpha = 0.5, size = 0.5)),
+  upper = list(continuous = wrap("cor", size = 0.7, method = "pearson")),
+  diag = list(continuous = wrap("densityDiag")),
+  aes(color = diabetes)
+)
+
+boxplot(glucose ~ diabetes, data=datos_limpio, col=c("lightblue","pink"))
+boxplot(mass ~ diabetes, data=datos_limpio, col=c("lightblue","pink"))
+boxplot(age ~ diabetes, data=datos_limpio, col=c("lightblue","pink"))
+boxplot(insulin ~ diabetes, data=datos_limpio, col=c("lightblue","pink"))
+boxplot(triceps ~ diabetes, data=datos_limpio, col=c("lightblue","pink"))
+boxplot(pregnant ~ diabetes, data=datos_limpio, col=c("lightblue","pink"))
+```
+
+Como podemos observar en los graficos anteriores, las personas que presentan positivamente la diabetes tienden posicionarse en la parte izquierda de la grafica ggpairs. Aunque, generalmente no se podria hacer una clara separacion entre los positivos y negativos de dicha enfermedad.
+
+## (b) Eliminad las observaciones con valores perdidos y comentad cómo cambia el tamaño muestral tras esta depuración. (1 punto)
+
+### Respuesta
+
+```{r}
+# ya hemos limpiado antes
+# comparar tamaños
+nrow(datos)
+nrow(datos_limpio)
+```
+
+Hay una cambio considerable de tamaño de muestra, que se puede deber a datos no recogidos correctamente, falta de datos etc, lo que nos genera NAs. Este cambio es bastante drástico ya que reducimos el tamaño a aproximadamente a la mitad del grupo original.
+
+## (c) Dividid los datos depurados en un conjunto de entrenamiento (70%) y un conjunto de prueba (30%), usando una partición aleatoria reproducible. (1 punto)
+
+### Respuesta
+
+```{r}
+library(caret)
+set.seed(123) #semilla
+datos_train_indice <- createDataPartition(datos_limpio$diabetes, p = 0.7, list = FALSE)
+datos_train <- datos_limpio[datos_train_indice, ] #entrenamiento
+datos_test <- datos_limpio[-datos_train_indice, ] #prueba
+
+datos_train$diabetes <- as.factor(datos_train$diabetes)
+datos_test$diabetes <- as.factor(datos_test$diabetes)
+```
+
+## (d) A partir de la exploración gráfica realizada en (a), seleccionad algunas variables que os parezcan útiles para predecir `diabetes`. Ajustad un modelo **LDA** sobre el conjunto de entrenamiento. Calculad la matriz de confusión y la fracción general de predicciones correctas sobre el conjunto de prueba. (2 puntos)
+
+### Respuesta
+
+```{r}
+library(MASS)
+lda_modelo <- lda(diabetes ~ pregnant + glucose + pressure + triceps + insulin + mass + pedigree + age, data = datos_train) 
+
+lda_prediccion <- predict(lda_modelo, newdata = datos_test)
+
+confmat_lda <- confusionMatrix(lda_prediccion$class, datos_test$diabetes) #matriz confusion
+
+confmat_lda$table
+confmat_lda$overall['Accuracy']
+```
+
+Observamos una tasa de acierto o precision superior al 71%, lo cual se podria considerar una buena aproximacion segun objetivos.
+
+## (e) Repetid (d) usando **QDA**. (1,5 puntos)
+
+### Respuesta
+
+```{r}
+qda_modelo <- qda(diabetes ~ pregnant + glucose + pressure + triceps + insulin + mass + pedigree + age, data = datos_train)
+
+qda_prediccion <- predict(qda_modelo, newdata = datos_test)
+
+confmat_qda <- confusionMatrix(qda_prediccion$class, datos_test$diabetes)
+
+confmat_qda$table
+confmat_qda$overall['Accuracy']
+```
+
+Análogo al apartado anterior
+
+## (f) Repetid (d) usando **naive Bayes**. (1,5 puntos)
+
+### Respuesta
+
+```{r}
+library(e1071)
+naive_modelo <- naiveBayes(x = datos_train[, -9], y = datos_train$diabetes)  
+naive_prediccion <- predict(naive_modelo, newdata = datos_test)
+
+confmat_naive <- confusionMatrix(naive_prediccion, datos_test$diabetes)
+
+confmat_naive$table
+confmat_naive$overall['Accuracy']
+```
+
+De igual manera a los anteriores apartados. Aunque la matriz de confusión esta mejor balanceada.
+
+## (g) ¿Cuál de estos métodos parece proporcionar los mejores resultados en estos datos? Justificad vuestra respuesta a partir de la tasa de acierto, la matriz de confusión y, si lo consideráis relevante, los supuestos de cada método. (1 punto)
+
+### Respuesta
+
+```{r}
+confmat_lda$overall['Accuracy']
+confmat_qda$overall['Accuracy']
+confmat_naive$overall['Accuracy']
+```
+
+El modelo QDA tiene una mayor tasa de acierto, esto quiere decir que a nivel general predice mejor.
+
+```{r}
+confmat_lda$table
+confmat_qda$table
+confmat_naive$table #naive bayes
+```
+
+De las matrices de confusion, la que podriamos considerar como mejor es la de Naive Bayes porque en los casos de reales positivos pero que se haya predicho como negativos es mucho menor que en los otros casos. Esto nos beneficia ya que, por ejemplo, si yo tengo diabetes pero el test me ha salido negativo, es decir, falso negativo, mi enfermedad puede conllevar a un deterioro considerable.
+
+## (h) ¿Qué suposiciones hacen LDA, QDA y naive Bayes sobre la distribución de las variables predictoras? Indicad cuáles parecen razonables en este caso a la luz de la exploración realizada. (1 punto)
+
+### Respuesta
+
+LDA asume que las observaciones en cada clase siguen una distribución gaussiana multivariante con una media específica de clase expression ($\mu_k$) y una matriz de covarianza común expression($\Sigma$)
+
+Como enfoque alternativo tenemos que QDA asume que cada clase tiene su matriz de covarianza específica expression($\Sigma_k$). Para saber si estos resultados tienen alta fiabilidad deberiamos aplicar un test de normalidad, como Kolmogorov-Smirnov.
+
+```{r}
+library(lmtest)
+variables <- c("pregnant","glucose","pressure","triceps","insulin","mass","pedigree","age")
+
+for (v in variables) {
+  cat("\nVariable:", v, "\n")
+  print(shapiro.test(datos_limpio[[v]][datos_limpio$diabetes=="neg"]))
+  print(shapiro.test(datos_limpio[[v]][datos_limpio$diabetes=="pos"]))
+}
+# para mirar si sigue una normal
+
+library(biotools)
+
+boxM(
+  datos_limpio[, c("pregnant","glucose","pressure","triceps","insulin","mass","pedigree","age")],
+  datos_limpio$diabetes
+) # pàra mirar si la matriz de covarianzas es comun
+```
+
+De todas estas comparativas debemos tener en cuenta que para los p-valores \> 0.05 no rechazamos la normalidad. En los casos contrarios, dichas variables no se deberian tener en cuenta para el qda y lda.
+
+Hablando de la homocedasticidad, como el p-valor es muy pequeño rechazamos la hipotesis de que hay una matriz de covarianzas común.
+
+En cuánto a las suposiciones de Naive Bayes, los predictores p son independientes dentro de cada clase. Matemáticamente se expresaría como: $(f_k = f_{k1} \times f_{k2} \times ... \times f_{kp})$ Las ventajas que suponen la independencia son que simplifica la estimación de la función densidad p-dimensional y, además, elimina la necesidad de considerar la asociación entre los predictores. Esta suposición conduce a buenos resultados, especialmente cuando n no es lo suficientemente grande en relación con p.
+
+Al ser variables que modelan factores biologicos no presentan independencia, ya visto en el apartado a) al ver las correlaciones, por lo que el modelo de Naive Bayes seria menos fiable por la falta de dicha independencia, pero observamos unos buenos resultados superiores al 70%.
