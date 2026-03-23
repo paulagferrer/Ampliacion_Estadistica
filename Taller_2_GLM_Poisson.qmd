@@ -1,0 +1,218 @@
+---
+title: "Taller 2: GLM -regresión Poisson"
+author: "Paula Gª Ferrer, Sara Blanco y Alicia Rodriguez"
+format:
+  html:
+    toc: true
+lang: es
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+### Problema 1
+
+Trabajaréis con un conjunto de datos simulado llamado trafico_peaje, que recoge información sobre el número de vehículos que atraviesan un peaje en intervalos de 10 minutos. La tabla de datos contiene las siguientes variables:
+
+| Variable | Descripción | Tipo | Unidad / escala |
+|----|----|----|----|
+| `coches` | Número de vehículos que pasan por el peaje en un intervalo de 10 minutos | Cuantitativa discreta | Recuento |
+| `franja` | Momento del día en que se realiza la observación (`madrugada`, `manana`, `tarde`, `noche`) | Cualitativa nominal | Categorías |
+| `finde` | Indica si la observación corresponde a fin de semana (`Si` / `No`) | Cualitativa binaria | Categorías |
+| `lluvia` | Indica si en ese intervalo está lloviendo (`Si` / `No`) | Cualitativa binaria | Categorías |
+| `obras` | Indica si hay obras en la carretera en ese momento (`Si` / `No`) | Cualitativa binaria | Categorías |
+
+El objetivo del taller es predecir la variable `coches` a partir de las variables clínicas disponibles.
+
+En cada apartado debéis incluir el código utilizado, la salida relevante y una breve interpretación de los resultados. No basta con mostrar el resultado numérico: es necesario comentarlo.
+
+Leemos los datos
+
+```{r}
+trafico_peaje <- read.csv("trafico_peaje.CSV", stringsAsFactors = TRUE)
+```
+
+## (a) Producid algunos resúmenes numéricos y gráficos de los datos de `trafico_peaje`. Comentad si se observan patrones claros en el número de coches según la franja horaria, la lluvia, la existencia de obras, el hecho de que sea fin de semana. (2 puntos)
+
+### Respuesta
+
+```{r}
+#resum
+summary(trafico_peaje)
+
+attach(trafico_peaje)
+
+#tabla medias
+aggregate(coches~franja,data = trafico_peaje, FUN = mean)
+aggregate(coches~lluvia,data = trafico_peaje, FUN = mean)
+aggregate(coches~finde,data = trafico_peaje, FUN = mean)
+aggregate(coches~obras,data = trafico_peaje, FUN = mean)
+
+#Boxplots
+boxplot(coches ~ franja, data = trafico_peaje, col = "blue")
+boxplot(coches ~ finde, data = trafico_peaje, col = "green")
+boxplot(coches ~ lluvia, data = trafico_peaje, col = "pink")
+boxplot(coches ~ obras, data = trafico_peaje, col = "red")
+
+#histograma
+hist(trafico_peaje$coches, main = "Distribución de coches")
+```
+
+Si tenemos en cuenta las franjas horarias, vemos que, de media, por la tarde es cuando pasan más coches, siendo este valor de 24'72, mientras que de madrugada es cuando menos pasan, una media de 7'31. Con las dos franjas horarias que quedan, pasan más coches por la mañana que por la noche. Fijándonos en el tiempo meteorológico, si no llueve la cantidad media de coches que circulan será de 19'49, en cambio, si llueve este valor disminuye en, más o menos, 12 unidades. La diferencia entre una y otra es suficientemente grande, por lo que creemos que puede ser una parámetro relevante. Sobre el fin de semana, el resultado es análogo al anterior, siendo casi el doble la cantidad de coches los días semanales. Si hay obras los valores medios de coches en circulación no varían de forma considerada,en menos de media unidad, por lo que creemos que no será un parámetro relevante.
+
+En lo referente a los boxplot:
+
+En cuánto a la franja horaria: Apreciamos que de madrugada la variabilidad es muy baja, los valores se encuentran en un intervalo muy pequeño. Además, en este caso nos encontramos un outlaier, algún día, de forma excepcional, la cantidad de coches de madrugada será de 20. Podemos intuir que la media será en torno a los 8 vehículos. Por la mañana la dispersión es más amplia, siendo la media en torno a los 18 coches. Observamos que el máximo en este caso se encuentra en 40 coches. Por las noches, vuelven a bajar tanto la variabilidad como la media, volvemos a observar un intervalo más reducidos de la cantidad de coches y la media se sitúa en torno a los 10. Por la tarde nos encontramos con la mayor media de vehículas, así como también la mayor dispersión y cantidad máxima en algún momento concreto. La media se sitúa sobre los 26, siendo la más alta de todas y con un pico máximo superior a 50 coches.
+
+Hablando del tiempo meteorológico: En el caso de que no llueva, la variabilidad es muy superior al caso de que si que llueva, situándose la franja entre 10 y 30. En el caso de ausencia de lluvia estos valores son entre 5 y 10. La media es, en el primer caso, de 17 coches, mientras que en el segundo de, aproximadamente, 8 coches. En ambos casos nos encontramos outliers, pero en el primero nuestro outlier es mucho más elevado que en los casos de que si que llueva.
+
+En el caso de los findes: Es análogo al anterior, la única diferencia que nos encontramos es que en días semanales no encontramos outlier, mientras que en días de fin de semana encontramos dos.
+
+Sobre la existencia de obras: Ambos los casos son similares, con una variabilidad y media muy parecidas, en ambos encontramos outliers.
+
+## (b) Indicad qué tipo de variable es coches y justificad por qué un modelo de regresión de Poisson puede ser adecuado en este contexto. (1 punto)
+
+### Respuesta
+
+Variable coches: Es una variable cuantitativa discreta, es decir, una variable numérica que será un número entero y positivo. Coches es una variable de recuento, pretendemos buscar el número de unidades de vehículos según una serie de condiciones: la franja horaria, la existencia de obras, si es fin de semana y si llueve o no.
+
+Por qué es adecuado el modelo de poisson?
+
+La distribución de Poisson se utiliza típicamente para modelar cuentas, ya que toma valores enteros no negativos. En nuestro caso particular, es exactamente lo que necesitamos, pues trabajamos con una variable númerica discreta y pretendemos contar las unidades de coches.
+
+## (c) Ajustad un modelo de regresión de Poisson para predecir coches a partir de franja, finde, lluvia y obras. Escribid la expresión del modelo ajustado e interpretad el signo de los coeficientes estimados. (2 puntos)
+
+### Respuesta
+
+```{r}
+mean(coches)
+var(coches)
+# como var >> mean podemos suponer que nuestro modelo no se va a ajustar a adecuadamente a los datos
+
+modelo_poisson <- glm(coches ~ franja + finde + lluvia + obras,
+                      data = trafico_peaje, family = poisson)
+
+summary(modelo_poisson)
+```
+
+Por tanto la expresión es la siguiente $$\lambda(X_1, \ldots, X_4) = exp(2.295 + \beta_1X_1 + \beta_2X_2 + \beta_3X_3 + \beta_4X_4)$$
+
+$\beta_1$ es 0.849 si corresponde a la franja de la mañana, 0.341 si es franja de la noche y 1.239 para la tarde La franja que falta se considera baseline y está incluida en el intercept.
+
+$\beta_2$ es -0.752 si es finde y si no es nuestra baseline.
+
+$\beta_3$ es -0.984 si es día de lluvia y si no es nuestra baseline.
+
+$\beta_4$ es 0.0158 si es día de obra y la otra es nuestra baseline.
+
+Los valores con signo negativo significan que un aumento de esta variable hacen que disminuya el número de coches que pasan por nuestro peaje.
+
+Por ejemplo, en caso de ser un día de lluvia se reduciría el número de coches en un factor de $exp(-0.984)=0.374$.
+
+## (d) Obtened las predicciones del modelo sobre los datos y representad gráficamente los valores observados frente a los valores predichos. Comentad si el ajuste parece satisfactorio. (1,5 puntos)
+
+### Respuesta
+
+```{r}
+modelo_poisson2 <- glm(coches ~ franja + finde + lluvia,
+                      data = trafico_peaje, family = poisson)
+#predicciones
+pred <- predict(modelo_poisson2, type = "response")
+
+lim <- range(c(trafico_peaje$coches, pred))
+lim <- c(floor(lim[1]/5)*5, ceiling(lim[2]/5)*5)
+#dibuix
+plot(trafico_peaje$coches, pred,
+     xlim = lim, ylim = lim,
+     xlab = "Observado", ylab = "Predicho",
+     xaxt = "n", yaxt = "n", pch = 19, col="grey40")
+axis(1, at = seq(lim[1], lim[2], 5))
+axis(2, at = seq(lim[1], lim[2], 5))
+abline(0, 1, col = "red", lwd = 2)
+```
+
+De teoria sabemos las posibles interpretaciones que podemos tener:
+
+Interpretación
+
+-   Si los puntos están cerca de la recta es buen ajuste
+
+-   Si hay mucha dispersión es mal ajuste
+
+En modelos de conteo: Es normal cierta variabilidad y lo importante es capturar la tendencia general.
+
+En nuestro caso, como podemos ver tenemos mucha dispersión, por tanto, a pesar de que algunos puntos los precide bien, en general tenemos un mal ajuste.
+
+## (e) Interpretad los coeficientes asociados a las variables cualitativas del modelo. En particular, explicad qué efecto parecen tener la lluvia, las obras y el hecho de que sea fin de semana sobre el número esperado de coches que pasan por el peaje. (1,5 puntos)
+
+### Respuesta
+
+```{r}
+coef(modelo_poisson2)
+```
+
+```{r}
+# recordemos que el modelo de Poisson deja los betas en escala logaritmica y debemos aplicar la exponencial
+exp(coef(modelo_poisson))
+```
+
+Los coeficientes indican que la franja horaria tiene un efecto importante sobre el número de coches: en particular, en la tarde se espera aproximadamente 3.45 veces más tráfico que en la madrugada. Por otro lado, tanto el fin de semana como la lluvia reducen significativamente el tráfico: en fin de semana el número esperado de coches se reduce a aproximadamente un 47%, y en condiciones de lluvia a un 37% respecto a un día laborable sin lluvia. Estos resultados son coherentes con el contexto real, ya que reflejan mayor tráfico en horas punta y menor tráfico bajo condiciones adversas.
+
+## (f) Representad gráficamente los coeficientes estimados asociados a la variable franja y comentad si el patrón obtenido resulta razonable en este contexto. (1 punto)
+
+### Respuesta
+
+```{r}
+coef_franja <- coef(modelo_poisson)[grep("franja", names(coef(modelo_poisson)))]
+
+barplot(coef_franja, main = "Efecto de la franja horaria")
+```
+
+Como observamos en el apartado a) la franja de tarde es la que tiene valores más grandes seguido de la de mañana, en cambio la franja de noche no. Por lo tanto, tiene sentido que estas dos franjas tengas más significancia y además presentan más dispersió y mayor media.
+
+## (g) Calculad e interpretad el número esperado de coches para dos situaciones concretas:
+
+-   **un día laborable por la tarde, sin lluvia ni obras**
+
+-   **un fin de semana de madrugada, con lluvia y obras**
+
+**Comparad ambas predicciones y comentad si la diferencia resulta coherente con el contexto. (1 punto)**
+
+### Respuesta
+
+```{r}
+cas1 <- data.frame(franja = "tarde",
+                     finde = "No",
+                     lluvia = "No",
+                     obras = "No")
+
+cas2 <- data.frame(franja = "madrugada",
+                     finde = "Si",
+                     lluvia = "Si",
+                     obras = "Si")
+
+pred1 <- predict(modelo_poisson, newdata = cas1, type = "response")
+pred2 <- predict(modelo_poisson, newdata = cas2, type = "response")
+
+print('Caso 1:')
+pred1
+print('Caso 2:')
+pred2
+```
+
+Hemos obtenido:
+
+$$
+E_1(coches) = 34,28689 \qquad \text{y} \qquad E_2(coches) = 1,776739
+$$
+
+Donde el primer valor corresponde al valor esperado en el caso 1 y el segundo valor al caso 2. Si comparamos ambos valores:
+
+$$
+\frac{34,28689}{1,776739} = 19,297...
+$$
+
+Es decir, en el primer caso se esperan unas 19 veces más coches que en el segundo (recordemos que los coches tienen que ser números enteros).
+
+Entonces, del caso 1 podemos decir que tenemos alto flujo de tráfico ( aprox 34 coches cada 10 min). En cambio, en el caso 2 tenemos un bajo flujo de tráfico (aprox 1 coche cada 10 min). Esta diferencia tiene sentido debido al contexto que rodea cada caso, ya que en el caso 1, nos encontramos con situaciones sin incidencias, mientras que el segundo caso refleja situaciones que reducen el tráfico, cosas como la lluvia, las obras en la carretera (aunque sea una varible no significativa), y el tiempo de madrugrada.
