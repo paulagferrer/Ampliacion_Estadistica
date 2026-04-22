@@ -1,0 +1,1195 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+  spanish,
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{5}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Ejercicio aplicado: Regresión lineal múltiple con diamonds},
+  pdfauthor={Alicia, Paula y Sara},
+  pdflang={es},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Ejercicio aplicado: Regresión lineal múltiple con diamonds}
+\author{Alicia, Paula y Sara}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Contexto y objetivo}\label{contexto-y-objetivo}
+
+En este ejercicio vas a analizar el dataset \textbf{\texttt{diamonds}} y
+modelar el \textbf{precio} de un diamante a partir de variables
+numéricas y cualitativas (factores). El objetivo es practicar:
+
+\begin{itemize}
+\tightlist
+\item
+  interpretación de coeficientes con variables cualitativas (dummies),
+\item
+  significancia estadística y su interpretación,
+\item
+  intervalos de confianza,
+\item
+  detección de no linealidad,
+\item
+  diagnóstico de outliers, leverage y observaciones influyentes.
+\end{itemize}
+
+\section{Significado de las
+variables}\label{significado-de-las-variables}
+
+Cada fila es un diamante. El dataset contiene 10 variables:
+
+\subsection{Variable respuesta}\label{variable-respuesta}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{\texttt{price}}: precio del diamante (USD).
+\end{itemize}
+
+\subsection{Predictores numéricos}\label{predictores-numuxe9ricos}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{\texttt{carat}}: peso del diamante (quilates).
+\item
+  \textbf{\texttt{depth}}: profundidad total (porcentaje: medida
+  porcentual de ``lo alto'' que es el diamante respecto a su anchura.
+\item
+  \textbf{\texttt{table}}: ancho de la ``mesa'' superior (porcentaje):
+  tamaño de la cara plana de arriba del diamante, es decir, el ancho de
+  dicha cara (la ``mesa'') expresado como porcentaje del ancho total del
+  diamante visto desde arriba.
+\item
+  \textbf{\texttt{x}}: longitud (mm).
+\item
+  \textbf{\texttt{y}}: anchura (mm).
+\item
+  \textbf{\texttt{z}}: profundidad (mm).
+\end{itemize}
+
+\subsection{Predictores cualitativos
+(factores)}\label{predictores-cualitativos-factores}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{\texttt{cut}}: calidad del corte (\emph{Fair, Good, Very Good,
+  Premium, Ideal}).
+\item
+  \textbf{\texttt{color}}: color, de \textbf{D (mejor)} a \textbf{J
+  (peor)}.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    La variable color es una variable cualitativa ordinal que indica el
+    grado de color del diamante (en diamantes ``blancos''): va de D a J.
+
+    \begin{itemize}
+    \tightlist
+    \item
+      D = mejor (más incoloro)
+    \item
+      E--F = casi incoloro
+    \item
+      G--H = tono algo más apreciable
+    \item
+      I--J = peor (más ``amarillento''/con más color)
+    \end{itemize}
+  \item
+    En general, a mejor grado (más cerca de D), mayor precio,
+    manteniendo lo demás constante.
+  \end{itemize}
+\item
+  \textbf{\texttt{clarity}}: claridad, de \textbf{I1 (peor)} a
+  \textbf{IF (mejor)} (categorías SI/VS/VVS intermedias): cuántas
+  inclusiones/imperfecciones tiene el diamante (y cuán visibles son). A
+  mayor claridad, normalmente mayor precio, manteniendo todo lo demás
+  constante.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Niveles (de peor a mejor)
+  \item
+    En el dataset aparecen estos niveles típicos (pueden verse con
+    \texttt{levels(diamonds\$clarity)}):
+
+    \begin{itemize}
+    \tightlist
+    \item
+      I1 (peor)
+    \item
+      SI2, SI1 (Slightly Included)
+    \item
+      VS2, VS1 (Very Slightly Included)
+    \item
+      VVS2, VVS1 (Very Very Slightly Included)
+    \item
+      IF (mejor, Internally Flawless)
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\section{Carga de datos}\label{carga-de-datos}
+
+Cargaremos el dataset desde Rdatasets (CSV). El fichero incluye una
+columna índice llamada \texttt{X} que eliminaremos.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+
+\NormalTok{url }\OtherTok{\textless{}{-}} \StringTok{"https://vincentarelbundock.github.io/Rdatasets/csv/ggplot2/diamonds.csv"}
+\NormalTok{diamonds }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(url)}
+
+\ControlFlowTok{if}\NormalTok{ (}\StringTok{"X"} \SpecialCharTok{\%in\%} \FunctionTok{names}\NormalTok{(diamonds)) diamonds }\OtherTok{\textless{}{-}}\NormalTok{ diamonds }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{X)}
+
+\FunctionTok{glimpse}\NormalTok{(diamonds)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 53,940
+## Columns: 11
+## $ rownames <int> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18~
+## $ carat    <dbl> 0.23, 0.21, 0.23, 0.29, 0.31, 0.24, 0.24, 0.26, 0.22, 0.23, 0~
+## $ cut      <chr> "Ideal", "Premium", "Good", "Premium", "Good", "Very Good", "~
+## $ color    <chr> "E", "E", "E", "I", "J", "J", "I", "H", "E", "H", "J", "J", "~
+## $ clarity  <chr> "SI2", "SI1", "VS1", "VS2", "SI2", "VVS2", "VVS1", "SI1", "VS~
+## $ depth    <dbl> 61.5, 59.8, 56.9, 62.4, 63.3, 62.8, 62.3, 61.9, 65.1, 59.4, 6~
+## $ table    <dbl> 55, 61, 65, 58, 58, 57, 57, 55, 61, 61, 55, 56, 61, 54, 62, 5~
+## $ price    <int> 326, 326, 327, 334, 335, 336, 336, 337, 337, 338, 339, 340, 3~
+## $ x        <dbl> 3.95, 3.89, 4.05, 4.20, 4.34, 3.94, 3.95, 4.07, 3.87, 4.00, 4~
+## $ y        <dbl> 3.98, 3.84, 4.07, 4.23, 4.35, 3.96, 3.98, 4.11, 3.78, 4.05, 4~
+## $ z        <dbl> 2.43, 2.31, 2.31, 2.63, 2.75, 2.48, 2.47, 2.53, 2.49, 2.39, 2~
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(diamonds)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     rownames         carat            cut               color          
+##  Min.   :    1   Min.   :0.2000   Length:53940       Length:53940      
+##  1st Qu.:13486   1st Qu.:0.4000   Class :character   Class :character  
+##  Median :26971   Median :0.7000   Mode  :character   Mode  :character  
+##  Mean   :26971   Mean   :0.7979                                        
+##  3rd Qu.:40455   3rd Qu.:1.0400                                        
+##  Max.   :53940   Max.   :5.0100                                        
+##    clarity              depth           table           price      
+##  Length:53940       Min.   :43.00   Min.   :43.00   Min.   :  326  
+##  Class :character   1st Qu.:61.00   1st Qu.:56.00   1st Qu.:  950  
+##  Mode  :character   Median :61.80   Median :57.00   Median : 2401  
+##                     Mean   :61.75   Mean   :57.46   Mean   : 3933  
+##                     3rd Qu.:62.50   3rd Qu.:59.00   3rd Qu.: 5324  
+##                     Max.   :79.00   Max.   :95.00   Max.   :18823  
+##        x                y                z         
+##  Min.   : 0.000   Min.   : 0.000   Min.   : 0.000  
+##  1st Qu.: 4.710   1st Qu.: 4.720   1st Qu.: 2.910  
+##  Median : 5.700   Median : 5.710   Median : 3.530  
+##  Mean   : 5.731   Mean   : 5.735   Mean   : 3.539  
+##  3rd Qu.: 6.540   3rd Qu.: 6.540   3rd Qu.: 4.040  
+##  Max.   :10.740   Max.   :58.900   Max.   :31.800
+\end{verbatim}
+
+\section*{Ejercicio 1 --- Exploración y
+limpieza}\label{ejercicio-1-exploraciuxf3n-y-limpieza}
+\addcontentsline{toc}{section}{Ejercicio 1 --- Exploración y limpieza}
+
+En datos reales pueden aparecer valores imposibles o sospechosos. En
+\texttt{diamonds} es común encontrar registros con dimensiones
+\texttt{x}, \texttt{y} o \texttt{z} iguales a 0, lo que suele
+corresponder a errores de medición/codificación.
+
+\subsection*{a) Tamaño y tipos de
+variables}\label{a-tamauxf1o-y-tipos-de-variables}
+\addcontentsline{toc}{subsection}{a) Tamaño y tipos de variables}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Indica cuántas filas y columnas tiene el dataset.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{dim}\NormalTok{(diamonds)        }\CommentTok{\# filas, columnas}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 53940    11
+\end{verbatim}
+
+Por lo que nuestro modelo tiene 53940 filas y 11 columnas.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Clasifica variables en numéricas y cualitativas.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str}\NormalTok{(diamonds)   }\CommentTok{\#cuantas observaciones y vairbales     }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    53940 obs. of  11 variables:
+##  $ rownames: int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ carat   : num  0.23 0.21 0.23 0.29 0.31 0.24 0.24 0.26 0.22 0.23 ...
+##  $ cut     : chr  "Ideal" "Premium" "Good" "Premium" ...
+##  $ color   : chr  "E" "E" "E" "I" ...
+##  $ clarity : chr  "SI2" "SI1" "VS1" "VS2" ...
+##  $ depth   : num  61.5 59.8 56.9 62.4 63.3 62.8 62.3 61.9 65.1 59.4 ...
+##  $ table   : num  55 61 65 58 58 57 57 55 61 61 ...
+##  $ price   : int  326 326 327 334 335 336 336 337 337 338 ...
+##  $ x       : num  3.95 3.89 4.05 4.2 4.34 3.94 3.95 4.07 3.87 4 ...
+##  $ y       : num  3.98 3.84 4.07 4.23 4.35 3.96 3.98 4.11 3.78 4.05 ...
+##  $ z       : num  2.43 2.31 2.31 2.63 2.75 2.48 2.47 2.53 2.49 2.39 ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(diamonds) }\CommentTok{\# aqui podemos ver de que tipo es cada}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     rownames         carat            cut               color          
+##  Min.   :    1   Min.   :0.2000   Length:53940       Length:53940      
+##  1st Qu.:13486   1st Qu.:0.4000   Class :character   Class :character  
+##  Median :26971   Median :0.7000   Mode  :character   Mode  :character  
+##  Mean   :26971   Mean   :0.7979                                        
+##  3rd Qu.:40455   3rd Qu.:1.0400                                        
+##  Max.   :53940   Max.   :5.0100                                        
+##    clarity              depth           table           price      
+##  Length:53940       Min.   :43.00   Min.   :43.00   Min.   :  326  
+##  Class :character   1st Qu.:61.00   1st Qu.:56.00   1st Qu.:  950  
+##  Mode  :character   Median :61.80   Median :57.00   Median : 2401  
+##                     Mean   :61.75   Mean   :57.46   Mean   : 3933  
+##                     3rd Qu.:62.50   3rd Qu.:59.00   3rd Qu.: 5324  
+##                     Max.   :79.00   Max.   :95.00   Max.   :18823  
+##        x                y                z         
+##  Min.   : 0.000   Min.   : 0.000   Min.   : 0.000  
+##  1st Qu.: 4.710   1st Qu.: 4.720   1st Qu.: 2.910  
+##  Median : 5.700   Median : 5.710   Median : 3.530  
+##  Mean   : 5.731   Mean   : 5.735   Mean   : 3.539  
+##  3rd Qu.: 6.540   3rd Qu.: 6.540   3rd Qu.: 4.040  
+##  Max.   :10.740   Max.   :58.900   Max.   :31.800
+\end{verbatim}
+
+Las variables que tenemos como numerico (num) o entero(int) son
+numéricas y las que son caracteres (chr) son las que consideramos
+cualitativas.
+
+Es decir, price, carat, depth, table, x, y, z son nuestras variables
+cuantitativas y cut, color, clarity son nuestras variables cualitativas.
+
+\subsection*{b) Valores sospechosos}\label{b-valores-sospechosos}
+\addcontentsline{toc}{subsection}{b) Valores sospechosos}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Cuenta cuántos registros tienen \texttt{x\ ==\ 0}, \texttt{y\ ==\ 0} o
+  \texttt{z\ ==\ 0}.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr)}
+\NormalTok{diamonds }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(x }\SpecialCharTok{==} \DecValTok{0} \SpecialCharTok{|}\NormalTok{ y }\SpecialCharTok{==} \DecValTok{0} \SpecialCharTok{|}\NormalTok{ z }\SpecialCharTok{==} \DecValTok{0}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{nrow}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 20
+\end{verbatim}
+
+Tenemos 20 registros donde al menos uno de los valores es 0.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Revisa extremos (mínimos y máximos) de \texttt{x}, \texttt{y},
+  \texttt{z}.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{diamonds }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}
+  \AttributeTok{min\_x =} \FunctionTok{min}\NormalTok{(x, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{), }\AttributeTok{max\_x =} \FunctionTok{max}\NormalTok{(x, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+  \AttributeTok{min\_y =} \FunctionTok{min}\NormalTok{(y, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{), }\AttributeTok{max\_y =} \FunctionTok{max}\NormalTok{(y, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+  \AttributeTok{min\_z =} \FunctionTok{min}\NormalTok{(z, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{), }\AttributeTok{max\_z =} \FunctionTok{max}\NormalTok{(z, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   min_x max_x min_y max_y min_z max_z
+## 1     0 10.74     0  58.9     0  31.8
+\end{verbatim}
+
+La variable x oscila entre 0 y 10.74, la variable y oscila entre 0 y
+58.9 y la variable z oscila entre 0 y 31.8.
+
+\subsection*{c) Limpieza}\label{c-limpieza}
+\addcontentsline{toc}{subsection}{c) Limpieza}
+
+Define una regla razonable de limpieza y aplícala. Por ejemplo:
+
+\begin{itemize}
+\tightlist
+\item
+  eliminar registros con \texttt{x\ \textless{}=\ 0} o
+  \texttt{y\ \textless{}=\ 0} o \texttt{z\ \textless{}=\ 0}.
+\end{itemize}
+
+Justifica brevemente por qué tu regla es razonable.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{diamonds\_clean }\OtherTok{\textless{}{-}}\NormalTok{ diamonds }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(x }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{, y }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{, z }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{)}
+\CommentTok{\#cuántas filas se eliminaron}
+\NormalTok{n\_removed }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(diamonds) }\SpecialCharTok{{-}} \FunctionTok{nrow}\NormalTok{(diamonds\_clean)}
+\NormalTok{n\_removed}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 20
+\end{verbatim}
+
+Eliminamos todos las dimensiones que sean 0 o negativas, ya que
+consideramos diamantes reales y no tiene sentido que se consideren y
+ensucien nuestros datos. Al hacer un analisis más general, estos datos
+podrían molestar o perturbar nuestros resultados y por ende nuestra
+interpretación.
+
+\section*{Ejercicio 2. Modelo base de regresión múltiple con
+cualitativas}\label{ejercicio-2.-modelo-base-de-regresiuxf3n-muxfaltiple-con-cualitativas}
+\addcontentsline{toc}{section}{Ejercicio 2. Modelo base de regresión
+múltiple con cualitativas}
+
+\subsection*{a) Ajusta el modelo lineal múltiple transformando
+previamente las variables cualitativas en
+factores.}\label{a-ajusta-el-modelo-lineal-muxfaltiple-transformando-previamente-las-variables-cualitativas-en-factores.}
+\addcontentsline{toc}{subsection}{a) Ajusta el modelo lineal múltiple
+transformando previamente las variables cualitativas en factores.}
+
+\[
+price = \beta_0 + \beta_1 carat + \beta_2 depth + \beta_3 table + \beta_4 x + \beta_5 y + \beta_6 z + \text{cut} + \text{color} + \text{clarity} + \varepsilon
+\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{diamonds\_clean}\SpecialCharTok{$}\NormalTok{cut }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(diamonds\_clean}\SpecialCharTok{$}\NormalTok{cut)}
+\NormalTok{diamonds\_clean}\SpecialCharTok{$}\NormalTok{color }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(diamonds\_clean}\SpecialCharTok{$}\NormalTok{color)}
+\NormalTok{diamonds\_clean}\SpecialCharTok{$}\NormalTok{clarity }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(diamonds\_clean}\SpecialCharTok{$}\NormalTok{clarity)}
+\NormalTok{reg\_multiple }\OtherTok{=} \FunctionTok{lm}\NormalTok{(price }\SpecialCharTok{\textasciitilde{}}\NormalTok{ carat }\SpecialCharTok{+}\NormalTok{ depth }\SpecialCharTok{+}\NormalTok{ table }\SpecialCharTok{+}\NormalTok{ x}\SpecialCharTok{+}\NormalTok{ y }\SpecialCharTok{+}\NormalTok{z }\SpecialCharTok{+}\NormalTok{ cut }\SpecialCharTok{+}\NormalTok{ color }\SpecialCharTok{+}\NormalTok{clarity, }\AttributeTok{data =}\NormalTok{ diamonds\_clean)}
+\end{Highlighting}
+\end{Shaded}
+
+Mostramos por pantalla,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{reg\_multiple}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = price ~ carat + depth + table + x + y + z + cut + 
+##     color + clarity, data = diamonds_clean)
+## 
+## Coefficients:
+##  (Intercept)         carat         depth         table             x  
+##      2711.98      11525.67        -65.08        -26.44      -1100.68  
+##            y             z       cutGood      cutIdeal    cutPremium  
+##        25.93       -114.98        574.39        824.88        753.00  
+## cutVery Good        colorE        colorF        colorG        colorH  
+##       717.34       -208.90       -267.40       -477.18       -979.76  
+##       colorI        colorJ     clarityIF    claritySI1    claritySI2  
+##     -1470.25      -2376.07       5340.28       3677.76       2716.69  
+##   clarityVS1    clarityVS2   clarityVVS1   clarityVVS2  
+##      4587.04       4276.35       5004.01       4951.82
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(reg\_multiple)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = price ~ carat + depth + table + x + y + z + cut + 
+##     color + clarity, data = diamonds_clean)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -21888.2   -586.5   -183.8    370.7  10734.4 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)   2711.983    413.798   6.554 5.66e-11 ***
+## carat        11525.671     51.630 223.235  < 2e-16 ***
+## depth          -65.077      4.639 -14.029  < 2e-16 ***
+## table          -26.444      2.905  -9.102  < 2e-16 ***
+## x            -1100.681     34.993 -31.455  < 2e-16 ***
+## y               25.933     19.447   1.334  0.18236    
+## z             -114.981     37.840  -3.039  0.00238 ** 
+## cutGood        574.391     33.526  17.132  < 2e-16 ***
+## cutIdeal       824.878     33.339  24.742  < 2e-16 ***
+## cutPremium     753.004     32.164  23.411  < 2e-16 ***
+## cutVery Good   717.341     32.178  22.293  < 2e-16 ***
+## colorE        -208.903     17.849 -11.704  < 2e-16 ***
+## colorF        -267.403     18.052 -14.813  < 2e-16 ***
+## colorG        -477.175     17.676 -26.996  < 2e-16 ***
+## colorH        -979.758     18.792 -52.138  < 2e-16 ***
+## colorI       -1470.253     21.114 -69.635  < 2e-16 ***
+## colorJ       -2376.066     26.071 -91.138  < 2e-16 ***
+## clarityIF     5340.277     50.968 104.777  < 2e-16 ***
+## claritySI1    3677.762     43.617  84.320  < 2e-16 ***
+## claritySI2    2716.690     43.801  62.023  < 2e-16 ***
+## clarityVS1    4587.044     44.519 103.035  < 2e-16 ***
+## clarityVS2    4276.347     43.831  97.563  < 2e-16 ***
+## clarityVVS1   5004.010     47.120 106.198  < 2e-16 ***
+## clarityVVS2   4951.822     45.819 108.073  < 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1127 on 53896 degrees of freedom
+## Multiple R-squared:  0.9201, Adjusted R-squared:  0.9201 
+## F-statistic: 2.699e+04 on 23 and 53896 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\subsection*{b) Categorías de referencia
+(baseline)}\label{b-categoruxedas-de-referencia-baseline}
+\addcontentsline{toc}{subsection}{b) Categorías de referencia
+(baseline)}
+
+R usa por defecto el primer nivel del factor como categoría de
+referencia (a menos que reordenes niveles). Comprueba los niveles de
+cada variable cualitativa e indica cuál es la categoría de referencia
+para \texttt{cut}, \texttt{color} y \texttt{clarity} y explica por qué
+lo es.
+
+Diremos que la categoría de referencia es aquella que al hacer la
+regresión su coeficiente vale 0 por todo.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{reg\_multiple}\SpecialCharTok{$}\NormalTok{xlevels}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $cut
+## [1] "Fair"      "Good"      "Ideal"     "Premium"   "Very Good"
+## 
+## $color
+## [1] "D" "E" "F" "G" "H" "I" "J"
+## 
+## $clarity
+## [1] "I1"   "IF"   "SI1"  "SI2"  "VS1"  "VS2"  "VVS1" "VVS2"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{reg\_multiple}\SpecialCharTok{$}\NormalTok{coefficients}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  (Intercept)        carat        depth        table            x            y 
+##   2711.98319  11525.67083    -65.07683    -26.44408  -1100.68148     25.93300 
+##            z      cutGood     cutIdeal   cutPremium cutVery Good       colorE 
+##   -114.98086    574.39056    824.87846    753.00398    717.34138   -208.90316 
+##       colorF       colorG       colorH       colorI       colorJ    clarityIF 
+##   -267.40258   -477.17515   -979.75846  -1470.25345  -2376.06616   5340.27707 
+##   claritySI1   claritySI2   clarityVS1   clarityVS2  clarityVVS1  clarityVVS2 
+##   3677.76236   2716.68976   4587.04370   4276.34651   5004.00999   4951.82226
+\end{verbatim}
+
+Como podemos ver las distintas categorías para la variable `cut' son
+``Fair'', ``Good'', ``Ideal'', ``Premium'' y ``Very Good'', pero a la
+hora de estimar los coeficientes vemos que la opción de cutFair no está
+estimada como coeficiente. Esto implica que su categoría de referencia o
+baseline es ``Fair''.
+
+Análogamente, para la variable `color' las diferente categorías son
+``D'', ``E'', ``F'', ``G'', ``H'', ``I'' y ``J''. Donde, nuevamente, la
+categoría ``D'' no está representada en los coeficientes y por tanto es
+su baseline.
+
+Para la variable `clarity' las categorías son ``I1'', ``IF'', ``SI1'',
+``SI2'', ``VS1'', ``VS2'', ``VVS1'' y ``VVS2''. En este caso, la
+categoría sin coeficiente es ``I1'' que corresponde a la categoría de
+referencia.
+
+\subsection*{c) Interpretación de coeficientes cualitativos
+(dummies)}\label{c-interpretaciuxf3n-de-coeficientes-cualitativos-dummies}
+\addcontentsline{toc}{subsection}{c) Interpretación de coeficientes
+cualitativos (dummies)}
+
+Elige \textbf{tres} coeficientes de variables cualitativas (por ejemplo,
+uno de \texttt{cut}, uno de \texttt{color}, uno de \texttt{clarity}) y
+escribe su interpretación en palabras.
+
+Tu interpretación debe seguir este patrón:
+
+\begin{quote}
+``Manteniendo constantes las demás variables, un diamante con
+{[}categoría{]} tiene un precio medio \textbf{X} dólares mayor/menor que
+un diamante con la categoría de referencia.''
+\end{quote}
+
+cut: calidad del corte Fair Manteniendo constantes las demás variables,
+un diamante con categoría Good tiene un precio medio 594 dólares mayor
+que un diamante con la categoría de referencia Manteniendo constantes
+las demás variables, un diamante con categoría Ideal tiene un precio
+medio 841 dólares mayor que un diamante con la categoría de referencia
+Manteniendo constantes las demás variables, un diamante con categoría
+Premium tiene un precio medio 772 dólares mayor que un diamante con la
+categoría de referencia Manteniendo constantes las demás variables, un
+diamante con categoría Very Good tiene un precio medio 741 dólares mayor
+que un diamante con la categoría de referencia color: color del diamante
+D Manteniendo constantes las demás variables, un diamante con categoría
+E tiene un precio medio 211 dólares menor que un diamante con la
+categoría de referencia Manteniendo constantes las demás variables, un
+diamante con categoría F tiene un precio medio 274 dólares menor que un
+diamante con la categoría de referencia Manteniendo constantes las demás
+variables, un diamante con categoría G tiene un precio medio 485 dólares
+menor que un diamante con la categoría de referencia Manteniendo
+constantes las demás variables, un diamante con categoría H tiene un
+precio medio 976 dólares menor que un diamante con la categoría de
+referencia Manteniendo constantes las demás variables, un diamante con
+categoría I tiene un precio medio 1469 dólares menor que un diamante con
+la categoría de referencia Manteniendo constantes las demás variables,
+un diamante con categoría J tiene un precio medio 2373 dólares menor que
+un diamante con la categoría de referencia clarity: claridad I1
+Manteniendo constantes las demás variables, un diamante con categoría IF
+tiene un precio medio 5338 dólares mayor que un diamante con la
+categoría de referencia Manteniendo constantes las demás variables, un
+diamante con categoría SI1 tiene un precio medio 3669 dólares mayor que
+un diamante con la categoría de referencia Manteniendo constantes las
+demás variables, un diamante con categoría SI2 tiene un precio medio
+2715 dólares mayor que un diamante con la categoría de referencia
+Manteniendo constantes las demás variables, un diamante con categoría
+VS1 tiene un precio medio 4581 dólares mayor que un diamante con la
+categoría de referencia Manteniendo constantes las demás variables, un
+diamante con categoría VS2 tiene un precio medio 4267 dólares mayor que
+un diamante con la categoría de referencia Manteniendo constantes las
+demás variables, un diamante con categoría VVS1 tiene un precio medio
+5006 dólares mayor que un diamante con la categoría de referencia
+Manteniendo constantes las demás variables, un diamante con categoría
+VVS2 tiene un precio medio 4946 dólares mayor que un diamante con la
+categoría de referencia
+
+\subsection*{d) Significancia
+estadística}\label{d-significancia-estaduxedstica}
+\addcontentsline{toc}{subsection}{d) Significancia estadística}
+
+Explica qué variables son significativas en el modelo de regresión
+considerado.
+
+Estudiamos los p valores obtenidos: carat (quilates) depth (profundidad
+total) table (ancho de la ``mesa'' superior) x (longitud) z
+(profundidad) cut (calidad del corte) color (color) clarity (claridad)
+Todos ellos, excepto las variables z e y, tiene valores menores a
+2\^{}(-16) por lo que los coeficientes serán distintos de 0 y aparecerán
+reflejados, por lo que son variables significativas. Z tiene un p valor
+de 0'00238 que sigue siendo significativo, pero menos que los demás.
+
+\subsection*{e) Intervalos de
+confianza}\label{e-intervalos-de-confianza}
+\addcontentsline{toc}{subsection}{e) Intervalos de confianza}
+
+Calcula un IC del 95\% para:
+
+\begin{itemize}
+\tightlist
+\item
+  el coeficiente de \texttt{carat},
+\item
+  un coeficiente dummy de \texttt{cut},
+\item
+  un coeficiente dummy de \texttt{clarity}.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Interpreta cada intervalo en lenguaje natural.
+\item
+  ¿Incluye el 0? ¿Qué implica eso respecto a \(\alpha = 0.05\)?
+\end{enumerate}
+
+Vamos a calcular los intervalos de confianza del 95\%.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{confint}\NormalTok{(reg\_multiple, }\AttributeTok{level =} \FloatTok{0.95}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                    2.5 %      97.5 %
+## (Intercept)   1900.93633  3523.03005
+## carat        11424.47533 11626.86632
+## depth          -74.16892   -55.98473
+## table          -32.13880   -20.74935
+## x            -1169.26745 -1032.09551
+## y              -12.18295    64.04895
+## z             -189.14709   -40.81463
+## cutGood        508.67838   640.10274
+## cutIdeal       759.53423   890.22268
+## cutPremium     689.96155   816.04642
+## cutVery Good   654.27186   780.41090
+## colorE        -243.88735  -173.91898
+## colorF        -302.78444  -232.02072
+## colorG        -511.81975  -442.53056
+## colorH       -1016.59017  -942.92674
+## colorI       -1511.63624 -1428.87066
+## colorJ       -2427.16575 -2324.96657
+## clarityIF     5240.37974  5440.17440
+## claritySI1    3592.27307  3763.25166
+## claritySI2    2630.83853  2802.54100
+## clarityVS1    4499.78544  4674.30195
+## clarityVS2    4190.43644  4362.25659
+## clarityVVS1   4911.65500  5096.36498
+## clarityVVS2   4862.01621  5041.62831
+\end{verbatim}
+
+Por tanto, para la variable carat el intervalo de confianza es
+(11161.66800, 11352.28861). Para la variable cutGood es (513.91060,
+645.59229). Finalmente, para clarityIF es (5245.09472, 5445.10978).
+
+Como el 0 no está en ninguno de los tres intervalos, rechazamos la
+hipótesis de que el modelo sea nulo. Por lo que significa que estos
+coeficientes son relevantes para nuestro modelo. Significa que para este
+nivel de \(\alpha = 0.05\), tenemos indicios para considerar el modelo
+con estas variables con coeficiente no nulo.
+
+\section*{Ejercicio 3. No linealidad}\label{ejercicio-3.-no-linealidad}
+\addcontentsline{toc}{section}{Ejercicio 3. No linealidad}
+
+El precio suele crecer de forma no lineal con \texttt{carat}. Vas a
+evaluar no linealidad con \textbf{dos enfoques}.
+
+\subsection*{a) Añadir término
+cuadrático}\label{a-auxf1adir-tuxe9rmino-cuadruxe1tico}
+\addcontentsline{toc}{subsection}{a) Añadir término cuadrático}
+
+Ajusta:
+
+\[
+price = \ldots + \beta_1 carat + \beta_2 carat^2 + \varepsilon
+\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{diamonds\_clean}\SpecialCharTok{$}\NormalTok{cut }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(diamonds\_clean}\SpecialCharTok{$}\NormalTok{cut)}
+\NormalTok{diamonds\_clean}\SpecialCharTok{$}\NormalTok{color }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(diamonds\_clean}\SpecialCharTok{$}\NormalTok{color)}
+\NormalTok{diamonds\_clean}\SpecialCharTok{$}\NormalTok{clarity }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(diamonds\_clean}\SpecialCharTok{$}\NormalTok{clarity)}
+
+\NormalTok{model\_quad }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(price }\SpecialCharTok{\textasciitilde{}}\NormalTok{ carat }\SpecialCharTok{+} \FunctionTok{I}\NormalTok{(carat}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{) }\SpecialCharTok{+}\NormalTok{ depth }\SpecialCharTok{+}\NormalTok{ table }\SpecialCharTok{+}\NormalTok{ x }\SpecialCharTok{+}\NormalTok{ y }\SpecialCharTok{+}\NormalTok{ z }\SpecialCharTok{+}\NormalTok{ cut }\SpecialCharTok{+}\NormalTok{ color }\SpecialCharTok{+}\NormalTok{ clarity, }\AttributeTok{data =}\NormalTok{ diamonds\_clean)}
+\FunctionTok{summary}\NormalTok{(model\_quad)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = price ~ carat + I(carat^2) + depth + table + x + 
+##     y + z + cut + color + clarity, data = diamonds_clean)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -11364.7   -570.9   -168.7    380.6  10746.4 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  20668.058    512.067  40.362  < 2e-16 ***
+## carat        22470.387    199.721 112.509  < 2e-16 ***
+## I(carat^2)   -2143.136     37.855 -56.615  < 2e-16 ***
+## depth         -187.011      4.995 -37.440  < 2e-16 ***
+## table          -47.135      2.846 -16.560  < 2e-16 ***
+## x            -3763.522     58.035 -64.850  < 2e-16 ***
+## y              -17.474     18.909  -0.924    0.355    
+## z             -207.850     36.799  -5.648 1.63e-08 ***
+## cutGood        471.669     32.623  14.458  < 2e-16 ***
+## cutIdeal       750.054     32.417  23.138  < 2e-16 ***
+## cutPremium     701.394     31.262  22.436  < 2e-16 ***
+## cutVery Good   590.245     31.343  18.832  < 2e-16 ***
+## colorE        -212.004     17.341 -12.226  < 2e-16 ***
+## colorF        -280.050     17.540 -15.967  < 2e-16 ***
+## colorG        -500.017     17.177 -29.109  < 2e-16 ***
+## colorH       -1016.163     18.268 -55.625  < 2e-16 ***
+## colorI       -1490.666     20.516 -72.659  < 2e-16 ***
+## colorJ       -2372.888     25.329 -93.682  < 2e-16 ***
+## clarityIF     5113.131     49.679 102.923  < 2e-16 ***
+## claritySI1    3502.257     42.489  82.428  < 2e-16 ***
+## claritySI2    2549.098     42.658  59.757  < 2e-16 ***
+## clarityVS1    4394.467     43.386 101.288  < 2e-16 ***
+## clarityVS2    4083.832     42.719  95.597  < 2e-16 ***
+## clarityVVS1   4779.984     45.949 104.027  < 2e-16 ***
+## clarityVVS2   4729.951     44.687 105.846  < 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1095 on 53895 degrees of freedom
+## Multiple R-squared:  0.9246, Adjusted R-squared:  0.9246 
+## F-statistic: 2.753e+04 on 24 and 53895 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+Interpretación: R\^{}2 = 0.9246. El modelo explica (aprox) 92.5\% de la
+variabilidad del precio, esto indica un ajuste muy alto.
+
+F-statistic, p \textless{} 2.2e-16 --\textgreater{} el modelo visto de
+manera global es significativo: al menos un coeficiente es distinto de
+cero. Si miramos de forma individual, todos son altamente
+significativos, exeptuando por la variable y. Entonces, los coeficientes
+de dichas variables con p-valor pequeño, serán diferentes de zero.
+
+Error estándar residual = 1095 dolares El error típico de predicción es
+de unos +- 1095 dólares.
+
+Coeficientes de carat = 22470.39 y carat\^{}2 = -2143.14 Ambos altamente
+significativos (p \textless{} 2e-16). Dado que el coeficiente de
+carat\^{}2 es negativo, nos dará una función concava. El precio aumenta
+con el peso, pero el incremento marginal se reduce para valores grandes
+de carat, manteniendo todo lo demás constante. Esto confirma la no
+linealidad.
+
+El hecho de que y no sea significativo indica que, dado todo lo demás,
+su contribución marginal no es estadísticamente distinta de 0.
+
+\subsection*{b) transformar la respuesta con
+logaritmo}\label{b-transformar-la-respuesta-con-logaritmo}
+\addcontentsline{toc}{subsection}{b) transformar la respuesta con
+logaritmo}
+
+Ajusta:
+
+\[
+\log(price) = \beta_0 + \beta_1 carat + \ldots + \varepsilon
+\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model\_log }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}\FunctionTok{log}\NormalTok{(price) }\SpecialCharTok{\textasciitilde{}}\NormalTok{ carat }\SpecialCharTok{+}\NormalTok{ depth }\SpecialCharTok{+}\NormalTok{ table }\SpecialCharTok{+}\NormalTok{ x }\SpecialCharTok{+}\NormalTok{ y }\SpecialCharTok{+}\NormalTok{ z }\SpecialCharTok{+}\NormalTok{ cut }\SpecialCharTok{+}\NormalTok{ color }\SpecialCharTok{+}\NormalTok{ clarity, }\AttributeTok{data =}\NormalTok{ diamonds\_clean)}
+\FunctionTok{summary}\NormalTok{(model\_log)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = log(price) ~ carat + depth + table + x + y + z + 
+##     cut + color + clarity, data = diamonds_clean)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.55878 -0.08661 -0.00045  0.08719  2.78983 
+## 
+## Coefficients:
+##                Estimate Std. Error  t value Pr(>|t|)    
+## (Intercept)  -4.1944864  0.0508329  -82.515   <2e-16 ***
+## carat        -1.0017504  0.0063425 -157.943   <2e-16 ***
+## depth         0.0584796  0.0005699  102.622   <2e-16 ***
+## table         0.0090477  0.0003569   25.349   <2e-16 ***
+## x             1.3369757  0.0042987  311.021   <2e-16 ***
+## y             0.0196250  0.0023889    8.215   <2e-16 ***
+## z             0.0575450  0.0046484   12.379   <2e-16 ***
+## cutGood       0.0992028  0.0041186   24.087   <2e-16 ***
+## cutIdeal      0.1668118  0.0040955   40.731   <2e-16 ***
+## cutPremium    0.1210304  0.0039512   30.631   <2e-16 ***
+## cutVery Good  0.1375650  0.0039529   34.801   <2e-16 ***
+## colorE       -0.0568899  0.0021927  -25.946   <2e-16 ***
+## colorF       -0.0953806  0.0022176  -43.011   <2e-16 ***
+## colorG       -0.1613651  0.0021714  -74.315   <2e-16 ***
+## colorH       -0.2581436  0.0023085 -111.825   <2e-16 ***
+## colorI       -0.3773893  0.0025937 -145.503   <2e-16 ***
+## colorJ       -0.5135648  0.0032027 -160.354   <2e-16 ***
+## clarityIF     1.1023639  0.0062611  176.065   <2e-16 ***
+## claritySI1    0.5902685  0.0053581  110.164   <2e-16 ***
+## claritySI2    0.4225327  0.0053808   78.526   <2e-16 ***
+## clarityVS1    0.8064552  0.0054690  147.460   <2e-16 ***
+## clarityVS2    0.7374361  0.0053845  136.956   <2e-16 ***
+## clarityVVS1   1.0081185  0.0057884  174.162   <2e-16 ***
+## clarityVVS2   0.9367205  0.0056287  166.420   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.1385 on 53896 degrees of freedom
+## Multiple R-squared:  0.9814, Adjusted R-squared:  0.9814 
+## F-statistic: 1.235e+05 on 23 and 53896 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+Es este caso todas las variables tienen un p-valor muy pequeño y son
+significativas. Por lo que todas ellas forman parte de nuestro medelo.
+En este caso, la variabilidad explicada es de 98.14\%.
+
+\subsection*{c) Comparación de
+modelos}\label{c-comparaciuxf3n-de-modelos}
+\addcontentsline{toc}{subsection}{c) Comparación de modelos}
+
+Compara los tres modelos realizados usando \(R^2\) ajustado y AIC.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{Modelo =} \FunctionTok{c}\NormalTok{(}\StringTok{"Lineal"}\NormalTok{, }\StringTok{"Cuadratico"}\NormalTok{, }\StringTok{"Logaritmica"}\NormalTok{),}
+  \AttributeTok{R2\_adj =} \FunctionTok{c}\NormalTok{(}\FunctionTok{summary}\NormalTok{(reg\_multiple)}\SpecialCharTok{$}\NormalTok{adj.r.squared,}
+             \FunctionTok{summary}\NormalTok{(model\_quad)}\SpecialCharTok{$}\NormalTok{adj.r.squared,}
+             \FunctionTok{summary}\NormalTok{(model\_log)}\SpecialCharTok{$}\NormalTok{adj.r.squared),}
+  \AttributeTok{AIC =} \FunctionTok{c}\NormalTok{(}\FunctionTok{AIC}\NormalTok{(reg\_multiple), }\FunctionTok{AIC}\NormalTok{(model\_quad), }\FunctionTok{AIC}\NormalTok{(model\_log))}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        Modelo    R2_adj       AIC
+## 1      Lineal 0.9200744 910893.71
+## 2  Cuadratico 0.9245595 907780.74
+## 3 Logaritmica 0.9813699 -60161.13
+\end{verbatim}
+
+\subsection*{d) Diagnóstico visual
+(residuos)}\label{d-diagnuxf3stico-visual-residuos}
+\addcontentsline{toc}{subsection}{d) Diagnóstico visual (residuos)}
+
+Haz diagnósticos visuales para el modelo que elijas.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(model\_log)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{EjercicioRegresionEnunciado_files/figure-latex/unnamed-chunk-13-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{EjercicioRegresionEnunciado_files/figure-latex/unnamed-chunk-13-2.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{EjercicioRegresionEnunciado_files/figure-latex/unnamed-chunk-13-3.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{EjercicioRegresionEnunciado_files/figure-latex/unnamed-chunk-13-4.pdf}}
+
+Podemos observar que hay algunos valores que destacan visualmente por
+ser valores atípicos. Por ejemplo, en la gráfica de los residuos vemos
+por encima los valores 26483 y 25839. Por debajo encontramos el valor
+33086.
+
+\subsection*{\texorpdfstring{e) Explica por qué \(\log(price)\) puede
+ayudar a linearizar y/o estabilizar
+varianza.}{e) Explica por qué \textbackslash log(price) puede ayudar a linearizar y/o estabilizar varianza.}}\label{e-explica-por-quuxe9-logprice-puede-ayudar-a-linearizar-yo-estabilizar-varianza.}
+\addcontentsline{toc}{subsection}{e) Explica por qué \(\log(price)\)
+puede ayudar a linearizar y/o estabilizar varianza.}
+
+Si price \textasciitilde{} carat\^{}beta, entonces log(price)
+\textasciitilde{} β*carat. Esto convierte una curva creciente en una
+recta.
+
+Reduce heterocedasticidad: En datos de precios, diamantes grandes tienen
+varianza mucho mayor; log transforma la escala, haciendo que la
+variabilidad relativa sea más constante.
+
+Nos da una interpretación de los coeficientes más intuitiva: beta en
+log(price) \textasciitilde{} carat se interpreta aproximadamente como \%
+cambio en precio por unidad de carat.
+
+\section*{Ejercicio 4. Outliers, leverage e
+influencia}\label{ejercicio-4.-outliers-leverage-e-influencia}
+\addcontentsline{toc}{section}{Ejercicio 4. Outliers, leverage e
+influencia}
+
+Trabaja con el modelo inicial.
+
+\subsection*{a) Outliers: residuos
+studentizados}\label{a-outliers-residuos-studentizados}
+\addcontentsline{toc}{subsection}{a) Outliers: residuos studentizados}
+
+Calcula residuos studentizados \(r_i\) e identifica posibles outliers
+con \(|r_i| > 3\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{predict}\NormalTok{(reg\_multiple), }\FunctionTok{rstudent}\NormalTok{(reg\_multiple))}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h=}\DecValTok{3}\NormalTok{, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{EjercicioRegresionEnunciado_files/figure-latex/unnamed-chunk-14-1.pdf}}
+Todos los valores que están por enciam de la recta roja son los posibles
+outliers.
+
+¿Cuántos outliers detectas con \(|r_i| > 3\)? Describe brevemente
+alguno.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{num\_outliers }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(}\FunctionTok{abs}\NormalTok{(}\FunctionTok{rstudent}\NormalTok{(reg\_multiple)) }\SpecialCharTok{\textgreater{}} \DecValTok{3}\NormalTok{)}
+\NormalTok{num\_outliers}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1152
+\end{verbatim}
+
+\subsection*{b) Leverage: valores hat}\label{b-leverage-valores-hat}
+\addcontentsline{toc}{subsection}{b) Leverage: valores hat}
+
+El leverage mide lo ``extremo'' que es un punto en el espacio de
+predictores (\(X\)). Identifica los puntos con mayor leverage.
+
+Criterio orientativo: leverage alto si \(h_i > \dfrac{2(p+1)}{n}\).
+Explica qué significa ``leverage alto'' en términos de valores de \(X\)
+(predictores).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{hat\_vals }\OtherTok{\textless{}{-}} \FunctionTok{hatvalues}\NormalTok{(reg\_multiple)}
+
+\NormalTok{n }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(diamonds\_clean)}
+\NormalTok{p }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(}\FunctionTok{coef}\NormalTok{(reg\_multiple)) }\SpecialCharTok{{-}} \DecValTok{1}
+
+\CommentTok{\# Umbral}
+\NormalTok{h }\OtherTok{\textless{}{-}} \DecValTok{2}\SpecialCharTok{*}\NormalTok{(p}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)}\SpecialCharTok{/}\NormalTok{n}
+
+\NormalTok{h}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.0008902077
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{(hat\_vals }\SpecialCharTok{\textgreater{}}\NormalTok{ h)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2072
+\end{verbatim}
+
+Calculamos el umbral para el calculo del leverage utilizando los
+hatvalues obtenidos por la función hatvalues(). Al considerar p=23
+estamos suponiendo que consideramos todas las diferentes categorías para
+cada variable, por ejemplo para color cogería colorD, colorF, colorE,
+etc.
+
+Esto nos da un número total de valores de leverage de 2072.
+
+\subsection*{c) Observaciones influyentes: Distancia de
+Cook}\label{c-observaciones-influyentes-distancia-de-cook}
+\addcontentsline{toc}{subsection}{c) Observaciones influyentes:
+Distancia de Cook}
+
+La distancia de Cook combina tamaño de residuo y leverage para medir
+influencia. Criterio orientativo: observaciones influyentes si
+\(D_i > \dfrac{4}{n}\). Identifica 1--2 observaciones influyentes y
+explica por qué (residuo grande, leverage alto o ambos).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cook\_vals }\OtherTok{\textless{}{-}} \FunctionTok{cooks.distance}\NormalTok{(reg\_multiple)}
+\NormalTok{D }\OtherTok{\textless{}{-}} \DecValTok{4}\SpecialCharTok{/}\NormalTok{n}
+
+\NormalTok{D}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 7.418398e-05
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{(cook\_vals }\SpecialCharTok{\textgreater{}}\NormalTok{ D)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3115
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{which}\NormalTok{(cook\_vals }\SpecialCharTok{\textgreater{}}\NormalTok{ D)[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  5 11 12 14 16 17 18 19 20 21 
+##  5 11 12 14 16 17 18 19 20 21
+\end{verbatim}
+
+\section*{Ejercicio 5. Multicolinealidad
+(VIF)}\label{ejercicio-5.-multicolinealidad-vif}
+\addcontentsline{toc}{section}{Ejercicio 5. Multicolinealidad (VIF)}
+
+Las variables \texttt{x}, \texttt{y}, \texttt{z}, \texttt{depth} y
+\texttt{carat} pueden estar relacionadas. Estudia multicolinealidad con
+VIF.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(car)}
+\FunctionTok{vif}\NormalTok{(reg\_multiple)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              GVIF Df GVIF^(1/(2*Df))
+## carat   25.391630  1        5.039011
+## depth    1.873275  1        1.368676
+## table    1.787821  1        1.337094
+## x       65.109687  1        8.069057
+## y       20.859591  1        4.567230
+## z       29.986743  1        5.476015
+## cut      1.946687  4        1.086831
+## color    1.180269  6        1.013908
+## clarity  1.352806  7        1.021819
+\end{verbatim}
+
+¿Ves VIF altos? ¿Cómo afectaría a errores estándar y significancia? ¿Qué
+harías (quitar variables, regularización, etc.)?
+
+Aquellas variables con VIF altos (superiores a 10) son: carat (22'43), x
+(57'51), y (20'59), z (23'58) Esto indica que la colinealidad es
+problemática, la solución es eliminar o combinar predictores.
+
+Si los valores son muy altos podríamos estudiar eliminar alguna de las
+variables si sospechamos que entre ellas hay un alto grado de
+correlación. En este caso, podría pasar que las variables x, y, z
+estuvieran relacionadas con la variable carat.
+
+\end{document}

@@ -14,7 +14,7 @@ execute:
 Trabajaréis con el conjunto de datos `PimaIndiansDiabetes2`, que es parte del paquete `mlbench`. La tabla de datos contiene información clínica de mujeres de ascendencia india pima, incluyendo las siguientes variables:
 
 | Variable | Descripción | Tipo | Unidad / escala |
-|------------------|------------------|------------------|------------------|
+|----|----|----|----|
 | `pregnant` | Número de embarazos de la paciente | Cuantitativa discreta | Recuento |
 | `glucose` | Concentración de glucosa plasmática a las 2 horas en una prueba oral de tolerancia a la glucosa | Cuantitativa continua | Concentración plasmática |
 | `pressure` | Presión arterial diastólica | Cuantitativa continua | mm Hg |

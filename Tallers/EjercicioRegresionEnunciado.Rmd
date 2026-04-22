@@ -444,5 +444,7 @@ carat (22’43), x (57’51), y (20’59), z (23’58)
 Esto indica que la colinealidad es problemática, la solución es eliminar o combinar predictores.
 
 Si los valores son muy altos podríamos estudiar eliminar alguna de las variables si sospechamos que entre ellas hay un alto grado de correlación. En este caso, podría pasar que las variables x, y, z estuvieran relacionadas con la variable carat. 
+ 
+ 
 
 

@@ -47,16 +47,13 @@ d\) **Conclusión:** A medida que $p$ crece, los puntos se vuelven extremadament
 
 -   **QDA:** Si la frontera es no lineal, QDA será mejor (menor sesgo). **A medida que** $n$ crece: QDA tiende a ser mejor porque tiene suficiente información para estimar los parámetros adicionales sin sobreajustar tanto.
 
-a\) Si la frontera de decisión de Bayes es lineal:
-Respuesta: El LDA funcionará mejor. Al tener un sesgo bajo (ya que coincide con la realidad) y una menor varianza (menos parámetros que estimar), superará al QDA en el conjunto de prueba.
+a\) Si la frontera de decisión de Bayes es lineal: Respuesta: El LDA funcionará mejor. Al tener un sesgo bajo (ya que coincide con la realidad) y una menor varianza (menos parámetros que estimar), superará al QDA en el conjunto de prueba.
 
-b) Si la frontera de decisión de Bayes es no lineal:
-Respuesta: El QDA funcionará mejor. El LDA sufrirá de un alto sesgo al intentar ajustar una línea a una curva, mientras que el QDA tiene la flexibilidad necesaria.
+b)  Si la frontera de decisión de Bayes es no lineal: Respuesta: El QDA funcionará mejor. El LDA sufrirá de un alto sesgo al intentar ajustar una línea a una curva, mientras que el QDA tiene la flexibilidad necesaria.
 
-c) A medida que aumenta el tamaño de la muestra $n$:
-Respuesta: Se espera que el QDA mejore en relación al LDA. Con más datos, la varianza del QDA (su principal desventaja) disminuye, permitiendo que su flexibilidad sea una ventaja sin tanto riesgo de sobreajuste.
+c)  A medida que aumenta el tamaño de la muestra $n$: Respuesta: Se espera que el QDA mejore en relación al LDA. Con más datos, la varianza del QDA (su principal desventaja) disminuye, permitiendo que su flexibilidad sea una ventaja sin tanto riesgo de sobreajuste.
 
-d) Verdadero o Falso:
+d)  Verdadero o Falso:
 
 ¿Un método más flexible siempre dará un error de prueba menor?
 
@@ -66,24 +63,13 @@ Respuesta: Falso. Si la verdadera frontera es lineal y tenemos pocos datos, un m
 
 Enunciado: Predecir si un estudiante obtendrá un "Sobresaliente" basado en $X_1$ (Horas de estudio) y $X_2$ (GPA). $\beta_0 = -6, \beta_1 = 0.05, \beta_2 = 1$.
 
-a\) Probabilidad para $X_1=40, X_2=3.5$:
-$$p(X) = \frac{e^{-6 + 0.05(40) + 3.5}}{1 + e^{-6 + 0.05(40) + 3.5}} = \frac{e^{-0.5}}{1 + e^{-0.5}} = \frac{0.6065}{1.6065} \approx 0.3775$$
-La probabilidad es del 37.75%.
+a\) Probabilidad para $X_1=40, X_2=3.5$: $$p(X) = \frac{e^{-6 + 0.05(40) + 3.5}}{1 + e^{-6 + 0.05(40) + 3.5}} = \frac{e^{-0.5}}{1 + e^{-0.5}} = \frac{0.6065}{1.6065} \approx 0.3775$$ La probabilidad es del 37.75%.
 
-b) ¿Cuántas horas debe estudiar para tener un 50% de probabilidad si su GPA es 3.5?
-Para que $p(X) = 0.5$, el exponente debe ser 0:
-$$-6 + 0.05(X_1) + 3.5 = 0 \implies 0.05(X_1) = 2.5 \implies X_1 = 50$$
-Debe estudiar ndefined50 horas.
+b)  ¿Cuántas horas debe estudiar para tener un 50% de probabilidad si su GPA es 3.5? Para que $p(X) = 0.5$, el exponente debe ser 0: $$-6 + 0.05(X_1) + 3.5 = 0 \implies 0.05(X_1) = 2.5 \implies X_1 = 50$$ Debe estudiar ndefined50 horas.
 
 ### Ejercicio 7
 
-Enunciado: Calcular la probabilidad de que una empresa dé dividendos dado que su beneficio neto es \$X=4\$, usando LDA con $\mu_{yes}=10, \mu_{no}=0, \sigma^2=36, \pi_{yes}=0.8$
-Solución:
-Usamos la fórmula de Bayes con densidades normales:
-$$P(Yes|X=4) = \frac{\pi_{yes} \exp(-\frac{1}{2\sigma^2}(4-\mu_{yes})^2)}{\pi_{yes} \exp(-\dots) + \pi_{no} \exp(-\frac{1}{2\sigma^2}(4-\mu_{no})^2)}$$
-$Numerador: 0.8 \cdot \exp(-(4-10)^2 / 72) = 0.8 \cdot \exp(-0.5) \approx 0.4852$
-$Denominador: 0.4852 + (0.2 \cdot \exp(-(4-0)^2 / 72)) = 0.4852 + (0.2 \cdot 0.8007) \approx 0.6453$
-$P = 0.4852 / 0.6453 \approx 0.752$
+Enunciado: Calcular la probabilidad de que una empresa dé dividendos dado que su beneficio neto es \$X=4\$, usando LDA con $\mu_{yes}=10, \mu_{no}=0, \sigma^2=36, \pi_{yes}=0.8$ Solución: Usamos la fórmula de Bayes con densidades normales: $$P(Yes|X=4) = \frac{\pi_{yes} \exp(-\frac{1}{2\sigma^2}(4-\mu_{yes})^2)}{\pi_{yes} \exp(-\dots) + \pi_{no} \exp(-\frac{1}{2\sigma^2}(4-\mu_{no})^2)}$$ $Numerador: 0.8 \cdot \exp(-(4-10)^2 / 72) = 0.8 \cdot \exp(-0.5) \approx 0.4852$ $Denominador: 0.4852 + (0.2 \cdot \exp(-(4-0)^2 / 72)) = 0.4852 + (0.2 \cdot 0.8007) \approx 0.6453$ $P = 0.4852 / 0.6453 \approx 0.752$
 
 ### Ejercicio 8
 
@@ -95,11 +81,9 @@ Respuesta: La Regresión Logística. El error que importa es el de prueba (30% v
 
 Enunciado: Relación entre \*odds\* y probabilidades.
 
-a\) Si los odds son 0.37, ¿cuál es la probabilidad?\*\*
-$p / (1-p) = 0.37 \implies p = 0.37 - 0.37p \implies 1.37p = 0.37 \implies p = 0.27$
+a\) Si los odds son 0.37, ¿cuál es la probabilidad?\*\* $p / (1-p) = 0.37 \implies p = 0.37 - 0.37p \implies 1.37p = 0.37 \implies p = 0.27$
 
-b\) Si la probabilidad es 0.16, ¿cuáles son los odds?\*\*
-$0.16 / (1-0.16) = 0.16 / 0.84 \approx 0.19$
+b\) Si la probabilidad es 0.16, ¿cuáles son los odds?\*\* $0.16 / (1-0.16) = 0.16 / 0.84 \approx 0.19$
 
 ### Ejercicio 10
 
@@ -107,8 +91,7 @@ Enunciado: Demostrar que el clasificador de Bayes es equivalente a la frontera l
 
 Respuesta: (Este ejercicio es algebraico y similar al Ejercicio 2, demostrando que al dividir las densidades normales de dos clases, los términos cuadráticos se cancelan en LDA, resultando en una función lineal de \$x\$).
 
-### 
-Ejercicio 11
+### Ejercicio 11
 
 Enunciado: Demostrar que en una clasificación de dos clases, si $p(x) = P(Y=1|X=x)$, entonces la frontera de decisión LDA es el valor de $x$ donde $p(x)=0.5$.
 

@@ -83,13 +83,11 @@ Respuesta: Al minimizar $\sum (y_i - x_i \beta)^2$, derivamos respecto a $\beta$
 
 ### Ejercicio 6
 
-Enunciado: Demostrar que la línea de regresión pasa por $(\bar{x}, \bar{y})$.
-Respuesta: La ecuación es $y = \hat{\beta}_0 + \hat{\beta}_1 x$. Sustituyendo la definición de $\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}$, obtenemos $\bar{y} = (\bar{y} - \hat{\beta}_1 \bar{x}) + \hat{\beta}_1 \bar{x}$, lo cual se simplifica a $\bar{y} = \bar{y}$
+Enunciado: Demostrar que la línea de regresión pasa por $(\bar{x}, \bar{y})$. Respuesta: La ecuación es $y = \hat{\beta}_0 + \hat{\beta}_1 x$. Sustituyendo la definición de $\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}$, obtenemos $\bar{y} = (\bar{y} - \hat{\beta}_1 \bar{x}) + \hat{\beta}_1 \bar{x}$, lo cual se simplifica a $\bar{y} = \bar{y}$
 
 ### Ejercicio 7
 
-**Enunciado:** Relación entre $R^2$ y la correlación al cuadrado ( $r^2$ ).
-Respuesta: En regresión lineal simple, se puede demostrar algebraicamente que $R^2 = \frac{[\sum(x_i-\bar{x})(y_i-\bar{y})]^2}{\sum(x_i-\bar{x})^2 \sum(y_i-\bar{y})^2}$, que coincide exactamente con la fórmula del coeficiente de correlación de Pearson al cuadrado.
+**Enunciado:** Relación entre $R^2$ y la correlación al cuadrado ( $r^2$ ). Respuesta: En regresión lineal simple, se puede demostrar algebraicamente que $R^2 = \frac{[\sum(x_i-\bar{x})(y_i-\bar{y})]^2}{\sum(x_i-\bar{x})^2 \sum(y_i-\bar{y})^2}$, que coincide exactamente con la fórmula del coeficiente de correlación de Pearson al cuadrado.
 
 ------------------------------------------------------------------------
 
@@ -196,8 +194,7 @@ summary(fit_xy)$t # Los estadísticos t son idénticos
 
 ### Ejercicio 12: Coeficientes idénticos
 
-**Enunciado:** ¿Cuándo $β^​y∼x​=β^​x∼y​$?
-**Respuesta:** Ocurre cuando $\sum x_i^2 ​= \sum y_i^2​$
+**Enunciado:** ¿Cuándo $β^​y∼x​=β^​x∼y​$? **Respuesta:** Ocurre cuando $\sum x_i^2 ​= \sum y_i^2​$
 
 ```{r}
 x <- rnorm(100)

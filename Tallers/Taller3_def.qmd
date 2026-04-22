@@ -578,3 +578,4 @@ La entrega debe incluir:
 -   las respuestas interpretativas redactadas con claridad.
 
 Se valorará tanto el funcionamiento del código como la interpretación de los resultados.
+>>>>>>> e50d1c9 (Guardar cambios locales (Tallers y modificaciones))

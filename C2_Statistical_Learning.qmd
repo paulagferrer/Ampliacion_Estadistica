@@ -49,13 +49,17 @@ Este ejercicio analiza el compromiso entre sesgo y varianza (*Bias-Variance Trad
 
 **(Teórico/Abierto)**
 
--    **Regresión (Vida real):** Predecir el precio de una vivienda
+-   **Regresión (Vida real):** Predecir el precio de una vivienda
 
-    (Respuesta: Precio; Predictores: m2, ubicación, año).
+```         
+(Respuesta: Precio; Predictores: m2, ubicación, año).
+```
 
--    **Clasificación (Vida real):** Diagnóstico médico
+-   **Clasificación (Vida real):** Diagnóstico médico
 
-    (Respuesta: Enfermo/Sano; Predictores: Síntomas, análisis de sangre).
+```         
+(Respuesta: Enfermo/Sano; Predictores: Síntomas, análisis de sangre).
+```
 
 -   **Clusterización (Vida real):** Segmentación de clientes de un supermercado para marketing personalizado basándose en hábitos de compra.
 
