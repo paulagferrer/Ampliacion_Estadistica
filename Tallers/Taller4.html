@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Paula Gª Ferrer, Alicia Rodriguez y Sara Blanco">
+
+<title>Taller 4: Más allá de la linealidad</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Taller4_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Taller4_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="Taller4_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Taller4_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="Taller4_files/libs/quarto-html/popper.min.js"></script>
+<script src="Taller4_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Taller4_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Taller4_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Taller4_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Taller4_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Taller4_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Taller4_files/libs/bootstrap/bootstrap-9e3ffae467580fdb927a41352e75a2e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#objetivo-del-taller" id="toc-objetivo-del-taller" class="nav-link active" data-scroll-target="#objetivo-del-taller">Objetivo del taller</a></li>
+  <li><a href="#organización-del-trabajo" id="toc-organización-del-trabajo" class="nav-link" data-scroll-target="#organización-del-trabajo">Organización del trabajo</a></li>
+  <li><a href="#puntuación" id="toc-puntuación" class="nav-link" data-scroll-target="#puntuación">Puntuación</a></li>
+  <li><a href="#librerías" id="toc-librerías" class="nav-link" data-scroll-target="#librerías">Librerías</a></li>
+  <li><a href="#carga-de-datos" id="toc-carga-de-datos" class="nav-link" data-scroll-target="#carga-de-datos">Carga de datos</a></li>
+  <li><a href="#exploración-inicial-de-los-datos" id="toc-exploración-inicial-de-los-datos" class="nav-link" data-scroll-target="#exploración-inicial-de-los-datos">1. Exploración inicial de los datos</a>
+  <ul class="collapse">
+  <li><a href="#respuesta" id="toc-respuesta" class="nav-link" data-scroll-target="#respuesta">Respuesta</a></li>
+  </ul></li>
+  <li><a href="#separación-en-entrenamiento-y-prueba-y-modelo-lineal-de-referencia" id="toc-separación-en-entrenamiento-y-prueba-y-modelo-lineal-de-referencia" class="nav-link" data-scroll-target="#separación-en-entrenamiento-y-prueba-y-modelo-lineal-de-referencia">2. Separación en entrenamiento y prueba y modelo lineal de referencia</a>
+  <ul class="collapse">
+  <li><a href="#respuesta-1" id="toc-respuesta-1" class="nav-link" data-scroll-target="#respuesta-1">Respuesta</a></li>
+  </ul></li>
+  <li><a href="#regresión-polinómica" id="toc-regresión-polinómica" class="nav-link" data-scroll-target="#regresión-polinómica">3. Regresión polinómica</a>
+  <ul class="collapse">
+  <li><a href="#respuesta-2" id="toc-respuesta-2" class="nav-link" data-scroll-target="#respuesta-2">Respuesta</a></li>
+  </ul></li>
+  <li><a href="#funciones-escalonadas" id="toc-funciones-escalonadas" class="nav-link" data-scroll-target="#funciones-escalonadas">4. Funciones escalonadas</a>
+  <ul class="collapse">
+  <li><a href="#respuesta-3" id="toc-respuesta-3" class="nav-link" data-scroll-target="#respuesta-3">Respuesta</a></li>
+  </ul></li>
+  <li><a href="#splines-de-regresión" id="toc-splines-de-regresión" class="nav-link" data-scroll-target="#splines-de-regresión">5. Splines de regresión</a>
+  <ul class="collapse">
+  <li><a href="#respuesta-4" id="toc-respuesta-4" class="nav-link" data-scroll-target="#respuesta-4">Respuesta</a></li>
+  </ul></li>
+  <li><a href="#splines-suavizados" id="toc-splines-suavizados" class="nav-link" data-scroll-target="#splines-suavizados">6. Splines suavizados</a>
+  <ul class="collapse">
+  <li><a href="#respuesta-5" id="toc-respuesta-5" class="nav-link" data-scroll-target="#respuesta-5">Respuesta</a></li>
+  </ul></li>
+  <li><a href="#comparación-final-de-modelos" id="toc-comparación-final-de-modelos" class="nav-link" data-scroll-target="#comparación-final-de-modelos">7. Comparación final de modelos</a>
+  <ul class="collapse">
+  <li><a href="#respuesta-6" id="toc-respuesta-6" class="nav-link" data-scroll-target="#respuesta-6">Respuesta</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Taller 4: Más allá de la linealidad</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Paula Gª Ferrer, Alicia Rodriguez y Sara Blanco </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="objetivo-del-taller" class="level2">
+<h2 class="anchored" data-anchor-id="objetivo-del-taller">Objetivo del taller</h2>
+<p>En este taller estudiaremos la relación entre la exposición simulada a microplásticos y un biomarcador inflamatorio en salud humana. La pregunta principal es si esta relación puede describirse razonablemente mediante una recta o si necesitamos modelos más flexibles para capturar una posible relación no lineal.</p>
+<p>Trabajaremos solo con dos variables:</p>
+<ul>
+<li><code>microplasticos_pg</code>: concentración simulada de microplásticos, expresada como partículas por gramo de muestra biológica.</li>
+<li><code>pcr_mg_l</code>: proteína C reactiva ultrasensible simulada, medida en mg/L.</li>
+</ul>
+<p>Compararemos cinco enfoques:</p>
+<ol type="1">
+<li>Modelo lineal.</li>
+<li>Regresión polinómica.</li>
+<li>Funciones escalonadas.</li>
+<li>Splines de regresión.</li>
+<li>Splines suavizados.</li>
+</ol>
+<p>Para comparar los modelos, dividiremos los datos en un conjunto de entrenamiento y un conjunto de prueba. El rendimiento predictivo se evaluará mediante el RMSE. Cuanto menor sea el RMSE, mejores serán las predicciones en el conjunto de prueba.</p>
+</section>
+<section id="organización-del-trabajo" class="level2">
+<h2 class="anchored" data-anchor-id="organización-del-trabajo">Organización del trabajo</h2>
+<p>El taller está pensado para realizarse en grupos de tres personas durante aproximadamente 50 minutos. Parte del código ya está preparado para que podáis centraros en ejecutar, interpretar, comparar modelos y redactar conclusiones.</p>
+<p>Al final del taller debéis entregar el documento renderizado en HTML y el archivo <code>.qmd</code> completado.</p>
+<p>No es necesario escribir respuestas largas. Priorizad comentarios breves, claros y conectados con los resultados obtenidos.</p>
+</section>
+<section id="puntuación" class="level2">
+<h2 class="anchored" data-anchor-id="puntuación">Puntuación</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 30%">
+<col style="width: 38%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Apartado</th>
+<th>Contenido</th>
+<th style="text-align: right;">Puntuación</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Exploración inicial y descripción de la relación observada</td>
+<td style="text-align: right;">1.50</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Separación entrenamiento/prueba y modelo lineal de referencia</td>
+<td style="text-align: right;">1.50</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Regresión polinómica</td>
+<td style="text-align: right;">1.50</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Funciones escalonadas</td>
+<td style="text-align: right;">1.25</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Splines de regresión</td>
+<td style="text-align: right;">1.50</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Splines suavizados</td>
+<td style="text-align: right;">1.50</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Comparación final e interpretación global</td>
+<td style="text-align: right;">1.25</td>
+</tr>
+<tr class="even">
+<td><strong>Total</strong></td>
+<td></td>
+<td style="text-align: right;"><strong>10.00</strong></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="librerías" class="level2">
+<h2 class="anchored" data-anchor-id="librerías">Librerías</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(splines)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mgcv)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>())</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="carga-de-datos" class="level2">
+<h2 class="anchored" data-anchor-id="carga-de-datos">Carga de datos</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"microplasticos_salud.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(datos)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 520
+Columns: 11
+$ id                &lt;chr&gt; "P001", "P002", "P003", "P004", "P005", "P006", "P00…
+$ edad              &lt;dbl&gt; 58, 50, 26, 34, 50, 19, 45, 67, 32, 51, 18, 57, 31, …
+$ sexo              &lt;chr&gt; "Hombre", "Hombre", "Hombre", "Hombre", "Mujer", "Ho…
+$ imc               &lt;dbl&gt; 21.6, 28.8, 22.6, 25.3, 22.2, 27.3, 22.7, 27.4, 23.2…
+$ fuma              &lt;chr&gt; "No", "No", "No", "No", "No", "No", "No", "Sí", "No"…
+$ actividad         &lt;chr&gt; "Media", "Media", "Media", "Alta", "Alta", "Media", …
+$ ultraprocesados   &lt;dbl&gt; 6.5, 5.8, 6.5, 4.4, 7.1, 4.9, 4.6, 4.3, 9.4, 6.2, 0.…
+$ agua_embotellada  &lt;dbl&gt; 4.2, 1.8, 3.5, 4.6, 3.4, 3.8, 4.0, 5.4, 4.7, 3.6, 3.…
+$ microplasticos_pg &lt;dbl&gt; 57.2, 54.5, 17.6, 61.5, 78.3, 114.5, 187.7, 68.8, 58…
+$ pcr_mg_l          &lt;dbl&gt; 2.96, 2.58, 1.00, 2.03, 3.05, 3.06, 3.77, 3.97, 1.83…
+$ sintomas          &lt;dbl&gt; 33.8, 29.4, 29.2, 26.6, 32.2, 32.0, 43.4, 31.6, 34.5…</code></pre>
+</div>
+</div>
+<p>Aunque el conjunto de datos contiene varias variables, en este taller solo usaremos <code>microplasticos_pg</code> como predictor y <code>pcr_mg_l</code> como variable respuesta.</p>
+</section>
+<section id="exploración-inicial-de-los-datos" class="level1">
+<h1>1. Exploración inicial de los datos</h1>
+<p>Cread un conjunto de datos reducido que contenga únicamente el predictor <code>microplasticos_pg</code> y la variable respuesta <code>pcr_mg_l</code>. A continuación, realizad un resumen descriptivo de ambas variables y describid la relación observada entre ellas.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En vuestra respuesta, comentad la forma general de la nube de puntos, si la relación parece aproximadamente lineal o no lineal, si hay zonas donde la respuesta cambia más rápidamente y si se observan valores atípicos o patrones destacables.</p>
+</div>
+</div>
+<section id="respuesta" class="level2">
+<h2 class="anchored" data-anchor-id="respuesta">Respuesta</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>datos_reducidos <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(microplasticos_pg, pcr_mg_l)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(datos_reducidos)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> microplasticos_pg    pcr_mg_l    
+ Min.   : 12.60    Min.   :0.630  
+ 1st Qu.: 38.00    1st Qu.:2.417  
+ Median : 53.90    Median :2.980  
+ Mean   : 62.42    Mean   :3.000  
+ 3rd Qu.: 77.60    3rd Qu.:3.567  
+ Max.   :260.00    Max.   :5.600  </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos_reducidos, <span class="fu">aes</span>(<span class="at">x =</span> microplasticos_pg, <span class="at">y =</span> pcr_mg_l)) <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Relación entre microplásticos y PCR"</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Microplásticos (pg)"</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"PCR (mg/L)"</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller4_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>La nube de puntos muestra, en general, una tendencia positiva, a medida que aumenta en valor de microplásticos también lo hacen los valores en la PCR. Vemos que la relación entre ambas variables no es lineal; al inicio los valores de PCR aumentan de forma clara, no obstante, a partir de valores de microplásticos de 125 pg los de PCR parecen estabilizarse.</p>
+<p>La respuesta cambia más drásticamente a partir de valores de entre 60pg y 70pg, la pendiente de la curva aumenta. En cambio, en valores más pequeños la pendiente es menor y en valores más grandes tiende a aplanarse e incluso disminuir al sobrepasar los 200pg. Observamos que la cantidad de datos va disminuyendo a medida que aumentan los valores de microplásticos. Además, al inicio observamos una gran dispersión de los datos con valores de PCR de menos de 1mg/L y valores de casi 5mg/L.</p>
+</section>
+</section>
+<section id="separación-en-entrenamiento-y-prueba-y-modelo-lineal-de-referencia" class="level1">
+<h1>2. Separación en entrenamiento y prueba y modelo lineal de referencia</h1>
+<p>Separad los datos en un conjunto de entrenamiento y un conjunto de prueba. Usaremos el 70% de las observaciones para entrenar los modelos y el 30% restante para evaluar su rendimiento predictivo.</p>
+<p>Después, ajustad un modelo lineal simple de la forma:</p>
+<p><span class="math display">\[
+\texttt{pcr\_mg\_l} = \beta_0 + \beta_1\,\texttt{microplasticos\_pg} + \varepsilon.
+\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Responded a las siguientes cuestiones:</p>
+<ol type="a">
+<li><p>¿Cuántas observaciones hay en el conjunto de entrenamiento y en el conjunto de prueba?</p></li>
+<li><p>¿El coeficiente asociado a <code>microplasticos_pg</code> es positivo o negativo? Interpretad dicho coeficiente en el contexto del problema.</p></li>
+<li><p>¿Qué RMSE obtiene el modelo lineal en el conjunto de prueba?</p></li>
+<li><p>Teniendo en cuenta el gráfico, ¿una recta parece suficiente para describir la relación observada?</p></li>
+</ol>
+</div>
+</div>
+<section id="respuesta-1" class="level2">
+<h2 class="anchored" data-anchor-id="respuesta-1">Respuesta</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">3299</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(datos)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>train_id <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span>n, <span class="at">size =</span> <span class="fu">round</span>(<span class="fl">0.7</span> <span class="sc">*</span> n))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> datos[train_id, ]</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>test  <span class="ot">&lt;-</span> datos[<span class="sc">-</span>train_id, ]</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># apartado a)</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(train)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 364</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(test)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 156</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Modelo lineal</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>modelo_lineal <span class="ot">&lt;-</span> <span class="fu">lm</span>(pcr_mg_l <span class="sc">~</span> microplasticos_pg, <span class="at">data =</span> train)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo_lineal)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = pcr_mg_l ~ microplasticos_pg, data = train)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.28913 -0.44202  0.03715  0.47060  2.08846 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)       2.173873   0.078708   27.62   &lt;2e-16 ***
+microplasticos_pg 0.013405   0.001108   12.10   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.7048 on 362 degrees of freedom
+Multiple R-squared:  0.2879,    Adjusted R-squared:  0.2859 
+F-statistic: 146.3 on 1 and 362 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predicciones y RMSE</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo_lineal, <span class="at">newdata =</span> test)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#apartado c)</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>rmse <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((test<span class="sc">$</span>pcr_mg_l <span class="sc">-</span> pred)<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>rmse</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6812863</code></pre>
+</div>
+</div>
+<p>Respuestas:</p>
+<p>a) Hay 364 observaciones en el conjunto de entrenamiento y 156 observaciones en el conjunto de test.</p>
+<p>b) El coeficiente asociado a microplasticos_pg es positivo. Es decir, al aumentar la concentración de microplásticos, también aumenta la concentración de PCR. En el contexto del problema, esto implica que una mayor exposición a microplásticos podría estar asociada con una mayor concentración de proteína C.</p>
+<p>c) 0.6812863</p>
+<p>d)</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># predicciones del modelo lineal (no hace falta para la línea)</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>pcr_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo_lineal, <span class="at">newdata =</span> test)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># grid correcto: la variable explicativa es microplasticos_pg</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>grid_lin <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">microplasticos_pg =</span> <span class="fu">seq</span>(<span class="fu">min</span>(train<span class="sc">$</span>microplasticos_pg),</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">max</span>(train<span class="sc">$</span>microplasticos_pg),</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>                          <span class="at">length.out =</span> <span class="dv">400</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co"># predicción sobre la grid</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>grid_lin<span class="sc">$</span>pcr_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo_lineal, <span class="at">newdata =</span> grid_lin)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="co"># gráfico coherente con el modelo</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> train,</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> microplasticos_pg, <span class="at">y =</span> pcr_mg_l),</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.35</span>, <span class="at">color =</span> <span class="st">"grey50"</span>) <span class="sc">+</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> test,</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> microplasticos_pg, <span class="at">y =</span> pcr_mg_l),</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.75</span>, <span class="at">color =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> grid_lin,</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> microplasticos_pg, <span class="at">y =</span> pcr_pred),</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>,</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"firebrick"</span>) <span class="sc">+</span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Modelo lineal"</span>,</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"RMSE en test ="</span>, rmse),</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Microplásticos (pg)"</span>,</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"PCR (mg/L)"</span></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller4_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="regresión-polinómica" class="level1">
+<h1>3. Regresión polinómica</h1>
+<p>Ajustad modelos de regresión polinómica usando <code>microplasticos_pg</code> como único predictor de <code>pcr_mg_l</code>. Probad polinomios de grados 1, 2, 3, 4 y 5.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Comentad qué grado polinómico obtiene el menor RMSE. Comparadlo con el RMSE del modelo lineal. ¿La regresión polinómica mejora el ajuste? ¿La curva obtenida parece razonable o presenta oscilaciones poco interpretables?</p>
+</div>
+</div>
+<section id="respuesta-2" class="level2">
+<h2 class="anchored" data-anchor-id="respuesta-2">Respuesta</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>grados <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>rmse_poly <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(grados))</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (g <span class="cf">in</span> grados) {</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(pcr_mg_l <span class="sc">~</span> <span class="fu">poly</span>(microplasticos_pg, g), <span class="at">data =</span> train)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo, <span class="at">newdata =</span> test)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  rmse_poly[g] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((test<span class="sc">$</span>pcr_mg_l <span class="sc">-</span> pred)<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>rmse_poly </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6812863 0.6722586 0.6708375 0.6762659 0.6871194</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#viasualizamos</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>mejor_g <span class="ot">&lt;-</span> <span class="fu">which.min</span>(rmse_poly)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>mejor_g <span class="co">#me da el 3, bien, coincide</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>modelo_mejor <span class="ot">&lt;-</span> <span class="fu">lm</span>(pcr_mg_l <span class="sc">~</span> <span class="fu">poly</span>(microplasticos_pg, mejor_g), <span class="at">data =</span> train)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> microplasticos_pg, <span class="at">y =</span> pcr_mg_l)) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">predict</span>(modelo_mejor, <span class="at">newdata =</span> datos)),<span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"blue"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller4_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Como podemos ver en la primera parte del codigo de este ejercicio y confirmamos en la segunda parte, el grado que nos hace obtener un rmse menor es el grado 3.</p>
+<p>Gracias a la nube de puntos podemos ver una ligera tendencia, dicha tendencia no es lineal ya que hay datos, sobre todo situados a la derecha, que nos sugieren una ligera curvatura. A pesar de que al principio de la curva se presenta bastante variabilidad de los datos, aún así podemos apreciar una curvatura que con una recta no la tendriamos en cuenta y perderiamos ajuste e información.</p>
+</section>
+</section>
+<section id="funciones-escalonadas" class="level1">
+<h1>4. Funciones escalonadas</h1>
+<p>Ajustad modelos mediante funciones escalonadas. En este enfoque, el rango de <code>microplasticos_pg</code> se divide en intervalos y el modelo estima una media distinta de <code>pcr_mg_l</code> para cada intervalo. Probad modelos con 3, 4, 5 y 6 intervalos.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Indicad cuántos intervalos obtiene el menor RMSE. Comparad el resultado con el modelo lineal y con el mejor polinomio. ¿El modelo escalonado describe bien la relación observada? ¿Qué problema interpretativo puede tener este tipo de modelo?</p>
+</div>
+</div>
+<section id="respuesta-3" class="level2">
+<h2 class="anchored" data-anchor-id="respuesta-3">Respuesta</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3,4,5,6</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>rmse_step <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="dv">4</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>) {</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># dividimos el predictor en j intervalos usando solo el entrenamiento</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  cortes <span class="ot">&lt;-</span> <span class="fu">quantile</span>(train<span class="sc">$</span>microplasticos_pg, <span class="at">probs =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> j <span class="sc">+</span> <span class="dv">1</span>))</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  train<span class="sc">$</span>intervalo <span class="ot">&lt;-</span> <span class="fu">cut</span>(train<span class="sc">$</span>microplasticos_pg,</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>                         <span class="at">breaks =</span> cortes,</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>                         <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  test<span class="sc">$</span>intervalo <span class="ot">&lt;-</span> <span class="fu">cut</span>(test<span class="sc">$</span>microplasticos_pg,</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>                        <span class="at">breaks =</span> cortes,</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>                        <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>  modelo_step <span class="ot">&lt;-</span> <span class="fu">lm</span>(pcr_mg_l <span class="sc">~</span> intervalo, <span class="at">data =</span> train)</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>  pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo_step, <span class="at">newdata =</span> test)</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>  rmse_step[j <span class="sc">-</span> <span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((test<span class="sc">$</span>pcr_mg_l <span class="sc">-</span> pred)<span class="sc">^</span><span class="dv">2</span>)) <span class="co"># esta desplazado, por eso luego sumamos 2</span></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>rmse_step <span class="co"># intervalos del 3 al 6</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7178106 0.7076027 0.7016931 0.6979123</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which.min</span>(rmse_step)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># viasualizar</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>mejor_j <span class="ot">&lt;-</span> <span class="fu">which.min</span>(rmse_step)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>cortes_mejor <span class="ot">&lt;-</span> <span class="fu">quantile</span>(train<span class="sc">$</span>microplasticos_pg,</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">probs =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> mejor_j <span class="sc">+</span> <span class="dv">1</span>))</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>train<span class="sc">$</span>intervalo <span class="ot">&lt;-</span> <span class="fu">cut</span>(train<span class="sc">$</span>microplasticos_pg,</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> cortes_mejor,</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>modelo_mejor_step <span class="ot">&lt;-</span> <span class="fu">lm</span>(pcr_mg_l <span class="sc">~</span> intervalo, <span class="at">data =</span> train)</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Pred para dibujar la funcio escalonada</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>grid <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">microplasticos_pg =</span> <span class="fu">seq</span>(<span class="fu">min</span>(datos<span class="sc">$</span>microplasticos_pg),</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>                                           <span class="fu">max</span>(datos<span class="sc">$</span>microplasticos_pg),</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">length.out =</span> <span class="dv">200</span>))</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>grid<span class="sc">$</span>intervalo <span class="ot">&lt;-</span> <span class="fu">cut</span>(grid<span class="sc">$</span>microplasticos_pg,</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks =</span> cortes_mejor,</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>                      <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>grid<span class="sc">$</span>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo_mejor_step, <span class="at">newdata =</span> grid)</span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> microplasticos_pg, <span class="at">y =</span> pcr_mg_l)) <span class="sc">+</span></span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> grid, <span class="fu">aes</span>(<span class="at">y =</span> pred), <span class="at">linewidth =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller4_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p>Como podemos ver el numero de intervalos que nos hacen obtener el menor rmse es con 4 invervalos.</p></li>
+<li><p>No especialmente, ya que presenta bastante variabilidad y hay datos que no se recogen bien con este sistema. Ya que como el rmse no es mejor que con el modelo lineal ni el polinomico, esta nueva division por tramos no mejora la capacidad predictiva.</p></li>
+<li><p>Las funciones constantes por tramos nos esta haciendo perder informacion importante. Además, de introducir discontinuidades artificiales en los puntos de corte, de modo que dos muestras muy parecidas pueden caer en intervalos diferentes.</p></li>
+</ul>
+</section>
+</section>
+<section id="splines-de-regresión" class="level1">
+<h1>5. Splines de regresión</h1>
+<p>Ajustad modelos mediante splines de regresión usando distintos valores de grados de libertad (<code>df</code>). Probad <code>df = 3, 4, 5, 6, 7</code>. Comparad el RMSE en el conjunto de prueba y representad gráficamente el mejor modelo.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Indicad qué valor de <code>df</code> obtiene el menor RMSE. Comparad el spline de regresión con el modelo lineal, el mejor polinomio y la mejor función escalonada. ¿La curva parece suficientemente flexible? ¿Se mantiene suave en todo el rango del predictor?</p>
+</div>
+</div>
+<section id="respuesta-4" class="level2">
+<h2 class="anchored" data-anchor-id="respuesta-4">Respuesta</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>df_vals <span class="ot">&lt;-</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">7</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>rmse_spline <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(df_vals))</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(df_vals)) {</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  df <span class="ot">&lt;-</span> df_vals[i]</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(pcr_mg_l <span class="sc">~</span> <span class="fu">bs</span>(microplasticos_pg, <span class="at">df =</span> df), <span class="at">data =</span> train)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo, <span class="at">newdata =</span> test)</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  rmse_spline[i] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((test<span class="sc">$</span>pcr_mg_l <span class="sc">-</span> pred)<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>rmse_spline</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6708375 0.6712921 0.6690714 0.6841837 0.6849061</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df_vals[<span class="fu">which.min</span>(rmse_spline)] <span class="sc">-</span> <span class="dv">2</span> <span class="co"># porque esta desplazado 2</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>mejor_df <span class="ot">&lt;-</span> df_vals[<span class="fu">which.min</span>(rmse_spline)] <span class="sc">-</span> <span class="dv">2</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>modelo_mejor <span class="ot">&lt;-</span> <span class="fu">lm</span>(pcr_mg_l <span class="sc">~</span> <span class="fu">bs</span>(microplasticos_pg, <span class="at">df =</span> mejor_df), <span class="at">data =</span> train)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>grid <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">microplasticos_pg =</span> <span class="fu">seq</span>(<span class="fu">min</span>(datos<span class="sc">$</span>microplasticos_pg),</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">max</span>(datos<span class="sc">$</span>microplasticos_pg),</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>                          <span class="at">length.out =</span> <span class="dv">200</span>)</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>grid<span class="sc">$</span>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo_mejor, <span class="at">newdata =</span> grid)</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> microplasticos_pg, <span class="at">y =</span> pcr_mg_l)) <span class="sc">+</span></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> grid, <span class="fu">aes</span>(<span class="at">y =</span> pred), <span class="at">linewidth =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller4_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Hemos visto que el valor de ‘df’ con el que se obtiene menor RMSE, 0’6697014, es 3.</p>
+<p>Comparándolo con modelos anteriores, vemos que es mejor que el modelo lineal y la función escalonada, el error es menor. En cambio, es similar a usar el mejor polinomio, pues en este caso coinciden al obtener el grado, que es 3.</p>
+<p>La curva parece lo suficientemente flexible como para capturar la tendencia general de los datos y se mantiene suave, como podemos observar, pues no hay saltos bruscos.</p>
+</section>
+</section>
+<section id="splines-suavizados" class="level1">
+<h1>6. Splines suavizados</h1>
+<p>Ajustad modelos mediante splines suavizados usando <code>mgcv::gam()</code>. Probad varios valores de <code>k</code>, que controla la dimensión máxima de la base del suavizado. El valor efectivo de complejidad lo decide el modelo, pero <code>k</code> establece un límite superior a esa complejidad.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Indicad qué valor de <code>k</code> obtiene el menor RMSE. Comentad también el valor de <code>edf</code>: ¿la curva efectiva es muy simple o bastante flexible? Comparad el resultado con los modelos anteriores. ¿El spline suavizado logra un buen equilibrio entre flexibilidad y suavidad?</p>
+</div>
+</div>
+<section id="respuesta-5" class="level2">
+<h2 class="anchored" data-anchor-id="respuesta-5">Respuesta</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajuste del spline suavizado usando validación cruzada</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>mod_ss <span class="ot">&lt;-</span> <span class="fu">smooth.spline</span>(</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> train<span class="sc">$</span>microplasticos_pg,</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> train<span class="sc">$</span>pcr_mg_l,</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">cv =</span> <span class="cn">TRUE</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>mod_ss</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+smooth.spline(x = train$microplasticos_pg, y = train$pcr_mg_l, 
+    cv = TRUE)
+
+Smoothing Parameter  spar= 1.082358  lambda= 0.004130969 (14 iterations)
+Equivalent Degrees of Freedom (Df): 5.717773
+Penalized Criterion (RSS): 141.4677
+PRESS(l.o.o. CV): 0.4832174</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># reprensetacion datos de entrenamiento</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>grid_micro_ss <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">microplasticos_pg =</span> <span class="fu">seq</span>(<span class="fu">min</span>(train<span class="sc">$</span>microplasticos_pg), </span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">max</span>(train<span class="sc">$</span>microplasticos_pg), <span class="at">length.out =</span> <span class="dv">400</span>))</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>pred_ss_train <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">microplasticos_pg =</span> grid_micro_ss<span class="sc">$</span>microplasticos_pg,</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">pcr_pred =</span> <span class="fu">predict</span>(mod_ss, <span class="at">x =</span> grid_micro_ss<span class="sc">$</span>microplasticos_pg)<span class="sc">$</span>y</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> train, <span class="fu">aes</span>(<span class="at">x =</span> microplasticos_pg, <span class="at">y =</span> pcr_mg_l), <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> pred_ss_train,</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> microplasticos_pg, <span class="at">y =</span> pcr_pred),</span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">1.2</span>,</span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"firebrick"</span></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Ajuste del spline suavizado en train"</span>,</span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"Grados de libertad efectivos ="</span>, <span class="fu">round</span>(mod_ss<span class="sc">$</span>df, <span class="dv">2</span>)),</span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Microplásticos"</span>,</span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"PCR"</span>,</span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"La curva roja corresponde al nivel de suavidad obtenido mediante</span></span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a><span class="st">    validación cruzada"</span>) <span class="sc">+</span></span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller4_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluamos en el conjunto de prueba.</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>rmseF <span class="ot">&lt;-</span> <span class="cf">function</span>(obs, pred) {</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>(<span class="fu">mean</span>((obs <span class="sc">-</span> pred)<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>pred_ss_test <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod_ss, <span class="at">x =</span> test<span class="sc">$</span>microplasticos_pg)<span class="sc">$</span>y</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>rmse_ss <span class="ot">&lt;-</span> <span class="fu">rmseF</span>(test<span class="sc">$</span>pcr_mg_l, pred_ss_test)</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>rmse_ss</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6730961</code></pre>
+</div>
+</div>
+<p>Finalmente, representamos el ajuste elegido junto con los datos de <code>train</code> y <code>test</code></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">#visiaulitzam</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> train, <span class="fu">aes</span>(microplasticos_pg, pcr_mg_l), <span class="at">alpha =</span> <span class="fl">0.35</span>, <span class="at">color =</span> <span class="st">"grey50"</span>) <span class="sc">+</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> test, <span class="fu">aes</span>(microplasticos_pg, pcr_mg_l), <span class="at">alpha =</span> <span class="fl">0.75</span>, <span class="at">color =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> pred_ss_train,</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(microplasticos_pg, pcr_pred),</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">1.2</span>,</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"firebrick"</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Spline suavizado ajustado por validación cruzada"</span>,</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">paste</span>(</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>      <span class="st">"df efectivos ="</span>, <span class="fu">round</span>(mod_ss<span class="sc">$</span>df, <span class="dv">2</span>),</span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>      <span class="st">"| RMSE en test ="</span>, <span class="fu">round</span>(rmse_ss, <span class="dv">2</span>)</span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Temperatura"</span>,</span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Alquileres"</span>,</span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Gris: train | Azul: test | Rojo: predicción del spline suavizado"</span></span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller4_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Nuestro modelo obtiene 5 grados de flexibilidad efectiva, lo que indica que la curva es bastante suave. El RMSE en el conjunto test es 0.6730961. La curva obtenida con el spline suavizado parece capturar bien la relación no lineal entre microplásticos y PCR, adaptándose a los datos de forma correcta y con una forma muy similar a la anterior. Pese a que captura una buena relación entre flexibilidad y suavidad, en cuanto a la interpretabilidad nos podría resultar más complicado que en los casos anteriores cosa que nos podría dificultar el trabajar con este modelo.</p>
+<p>Sería una buena opción intentar valorar utillizar otros modelos que tengan un rmse ligeramente superior a cambio de un aumento considerable en la interpretabilidad.</p>
+</section>
+</section>
+<section id="comparación-final-de-modelos" class="level1">
+<h1>7. Comparación final de modelos</h1>
+<p>Completad la comparación final reuniendo el mejor resultado de cada familia de modelos. Después, redactad una conclusión global sobre qué modelo elegiríais y por qué.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Redactad una conclusión final de entre 8 y 12 líneas. La conclusión debe responder a estas preguntas:</p>
+<ol type="1">
+<li>¿Qué modelo obtiene el menor RMSE?</li>
+<li>¿Ese modelo también parece razonable desde el punto de vista gráfico?</li>
+<li>¿La relación entre microplásticos y PCR parece lineal o no lineal?</li>
+<li>¿Qué método elegiríais si buscáis un equilibrio entre buena predicción e interpretabilidad?</li>
+<li>¿Qué limitaciones tiene este análisis al estar basado en datos simulados y en un único predictor?</li>
+</ol>
+</div>
+</div>
+<section id="respuesta-6" class="level2">
+<h2 class="anchored" data-anchor-id="respuesta-6">Respuesta</h2>
+<ol type="1">
+<li><p>¿Qué modelo obtiene el menor RMSE?</p>
+<p>El modelo que obtiene el menor RMSE es el spline de regresión con un RMSE de 0.6690714.</p></li>
+<li><p>¿Ese modelo también parece razonable desde el punto de vista gráfico?</p>
+<p>Captura la relación no lineal entre microplásticos y PCR de forma suave, ajustándose de forma correcta y bastante precisa a los datos. De hecho, los dos métodos que trabajan con splines obtienen unas gráficas muy similares y un rmse también muy similar.</p></li>
+<li><p>¿La relación entre microplásticos y PCR parece lineal o no lineal?</p>
+<p>La relación entre microplásticos y PCR parece claramente no lineal, ya que las curvas de los últimos modelos se ajustan mejor a los datos que una recta simple.</p></li>
+<li><p>¿Qué método elegiríais si buscáis un equilibrio entre buena predicción e interpretabilidad?</p>
+<p>Probablemente, si buscamos un equilibrio entre buena predicción e interpretabilidad podemos decantarnos por un modelo polinómico con el grado que minimice el RMSE, ya que la diferencia entre los errores es muy pequeña y el aspecto de la iinterpretabilidad lo compensaría.</p></li>
+<li><p>¿Qué limitaciones tiene este análisis al estar basado en datos simulados y en un único predictor?</p>
+<p>Al estar basado en datos simulados, los modelos podrían obteneres peores resultados al trabajar sobre datos reales. Además, como estamos trabajando con un único predictor podría ser más difícil capturar relaciones más complejas muy habituales en situaciones reales, especialmente en ámbitos médicos y aspectos biológicos.</p></li>
+</ol>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
